@@ -8,6 +8,7 @@ class ZeroEngine:
         self.seed = seed
         self.device = device
         self.original_register = None
+        self.hooks = []
 
     # Add more functions for other types of sharding like by expert 
     def _flat_shard_fn(self, shape):
@@ -47,9 +48,17 @@ class ZeroEngine:
                 meta._shape_dtype = (tuple(param.shape), param.dtype)
                 return self.original_register(module_self, name, meta)
             return self.original_register(module_self, name, param)
+        
+        def gather_params_for_forward(module, input):
+            print(f"Rank: {self.rank}", module)
+
 
         nn.Module.register_parameter = meta_register
+        f_pre_hook = nn.modules.module.register_module_forward_pre_hook(gather_params_for_forward)
+        self.hooks.append(f_pre_hook)
         return self
 
     def __exit__(self, *args, **kwargs):
         nn.Module.register_parameter = self.original_register
+        for hook in self.hooks:
+            hook.remove()
