@@ -1,0 +1,17 @@
+services:
+  datahost:
+    build:
+      context: .
+      dockerfile: datasets/dev/Dockerfile
+    ports:
+      - "7777:7777"
+    env_file: .env
+
+  trainer:
+    build:
+      context: .
+      dockerfile: test/Dockerfile
+    depends_on:
+      - datahost
+    env_file: .env
+    shm_size: 2gb

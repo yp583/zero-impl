@@ -1,0 +1,22 @@
+run:
+  steps: 200
+  log_every: 10
+  seed: 1337
+  device: "cpu"
+  precision: "fp32"
+  profile: false
+
+dist:
+  world_size: 4
+  backend: "gloo"
+  timeout_s: 600
+
+data:
+  global_batch_size: 64
+  input_dim: 1024
+  num_classes: 100
+
+model:
+  arch: "tiny_mlp"      # or "tiny_transformer"
+  width: 2048
+  depth: 4
