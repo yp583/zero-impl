@@ -6,6 +6,9 @@ services:
     ports:
       - "7777:7777"
     env_file: .env
+    volumes:
+      - ./engine:/app/engine
+      - ./datasets:/app/datasets
 
   trainer:
     build:
@@ -15,3 +18,7 @@ services:
       - datahost
     env_file: .env
     shm_size: 2gb
+    volumes:
+      - ./engine:/app/engine
+      - ./datasets:/app/datasets
+      - ./test:/app/test
