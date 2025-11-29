@@ -1,7 +1,7 @@
-from pyexpat import model
 import torch.distributed as dist
 from datasets.dev.dev_dataclient import DevDatasetClient
-
+from test.model import TestModel
+from engine.zero_init import ZeroEngine
 
 def finalize_dist():
     dist.barrier()
@@ -12,7 +12,7 @@ def dist_train():
     rank = dist.get_rank()
     world_size = dist.get_world_size()
     
-    print(f"[Rank {rank}/{world_size}] Process initialized successfully!")
+    print(f"[Rank {rank + 1}/{world_size}] Process initialized successfully!")
 
     # Get Data
     # HTTP eventually should be streamed during training loop
@@ -20,6 +20,13 @@ def dist_train():
     data = ds_client.get_shard()
 
     #init model with the engine context
+    with ZeroEngine(rank=rank, world_size=world_size, seed=42, device="cpu") as ze:
+        model = TestModel()
+        total_params = sum(p.numel() for p in model.parameters())
+        ze.materialize_sharded_params(model)
+        
+    not_meta = sum(p.numel() for p in model.parameters() if p.device.type != "meta")
+    print(f"[Rank {rank + 1}] Parameters not on 'meta' device: {not_meta} / {total_params} total")
 
     #for each
         #forward
