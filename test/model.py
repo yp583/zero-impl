@@ -19,4 +19,3 @@ class TestModel(nn.Module):
         attn_output = attn_output.squeeze(1)
         x = self.layer2(attn_output)
         return x
-
