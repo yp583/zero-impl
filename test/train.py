@@ -1,14 +1,19 @@
+import torch
 import torch.distributed as dist
 from datasets.dev.dev_dataclient import DevDatasetClient
 from test.model import TestModel
 from engine.zero_init import ZeroEngine
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def finalize_dist():
     dist.barrier()
     dist.destroy_process_group()
 
 def dist_train():
-    dist.init_process_group(backend="gloo")  # or "nccl" for GPU
+    dist.init_process_group(backend=os.getenv("TORCH_BACKEND"))  # or "nccl" for GPU
     rank = dist.get_rank()
     world_size = dist.get_world_size()
     
@@ -24,6 +29,8 @@ def dist_train():
         model = TestModel()
         total_params = sum(p.numel() for p in model.parameters())
         ze.materialize_sharded_params(model)
+        dummy_input = torch.randn(2, 16)
+        model.forward(dummy_input)
         
     not_meta = sum(p.numel() for p in model.parameters() if p.device.type != "meta")
     print(f"[Rank {rank + 1}] Parameters not on 'meta' device: {not_meta} / {total_params} total")
