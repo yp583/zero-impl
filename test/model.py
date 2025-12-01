@@ -20,3 +20,7 @@ class TestModel(nn.Module):
         attn_output = attn_output.squeeze(1)
         x = self.layer2(attn_output)
         return x
+
+if __name__ == "__main__":
+    model = TestModel()
+    print(dict(model.named_parameters(recurse=False)).keys())
