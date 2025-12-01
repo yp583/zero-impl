@@ -2,7 +2,7 @@ import torch
 import torch.distributed as dist
 from datasets.dev.dev_dataclient import DevDatasetClient
 from test.model import TestModel
-from engine.zero_init import ZeroEngine
+from engine.zero_init import ZeroEngine, ZeroEngineConfig
 from dotenv import load_dotenv
 import os
 
