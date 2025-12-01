@@ -21,7 +21,7 @@ class ZeroEngine:
     def materialize_sharded_params(self, model):
         g = torch.Generator(device=self.device).manual_seed(self.seed)
         with torch.no_grad():
-            for name, p in model.named_parameters():
+            for name, p in list(model.named_parameters()):
                 shape, dtype = p._shape_dtype
                 local = self._flat_shard_fn(shape).to(dtype=dtype, device=self.device)
 
