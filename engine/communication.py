@@ -29,7 +29,7 @@ class ShardedParamState:
 
         local_param = nn.Parameter(local, requires_grad=param.requires_grad)
         self.materialized_params[name] = local_param
-def fetch_params_for_module(rank, world_size, module):
+def fetch_params_for_module(rank, world_size, module) -> dict[str, nn.Parameter]:
 
     shard_state: ShardedParamState = getattr(module, "_shard_state", None)
     if shard_state is None:
