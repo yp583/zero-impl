@@ -1,11 +1,16 @@
-def gather_params_for_forward(rank: int, module):
-    # check whether this rank has params associated with module if so broadcast them
-        # ways to do this
-        # 1. have a map (rank -> list(params)) and loop over params to see if they belong to this module
-        # 2. have a map (param -> rank) loop over params and get the rank and check against this rank to decide whether to recv or broadcast
-        # 3. add a seperate param not on meta that will have a materialized_ prefix and check if the module has it for the modules named params
+from dataclasses import dataclass
+import torch
+import torch.nn as nn
+import torch.distributed as dist
+from typing import Callable
 
-    # recieve the params for the module from other ranks that dont have materialized version
+
+# what do we need
+# we need to know the shape of the tensor (bucket) being broadcasted from other ranks. 
+# approaches
+# have metadata attached to the module during init that will have rank -> numel of the param so that we can broadcast into it
+    # store N tensors for each ranks bucket of the params
+# need to do N broadcasts where N is the number of ranks (unavoidable)
 class ShardedParamState:
     rank_numels: list[int]
     materialized_params: dict[str, nn.Parameter]
@@ -24,12 +29,39 @@ class ShardedParamState:
 
         local_param = nn.Parameter(local, requires_grad=param.requires_grad)
         self.materialized_params[name] = local_param
+def fetch_params_for_module(rank, world_size, module):
+
+    shard_state: ShardedParamState = getattr(module, "_shard_state", None)
+    if shard_state is None:
+        return
+
+    module_params = [torch.empty(n) for n in shard_state.rank_numels]
+
+    broadcast_params_list = []
 
     for name, _ in module.named_parameters():
-        materialized_param = getattr(module, f"materialized_{name}", None)
+        materialized_param = shard_state.materialized_params.get(name, None)
         if materialized_param is not None:
-            #naive to just send need ot bucket 
-            pass
+            broadcast_params_list.append(materialized_param.data)
+            
+        
+    
+    broadcast_params = torch.Tensor([])
+    if len(broadcast_params_list) > 0:
+        broadcast_params = torch.cat(broadcast_params_list)
+    module_params[rank] = broadcast_params
+
+    broadcasts = []
+    for r in range(world_size):
+        broadcasts.append(dist.broadcast(module_params[r], src=r, async_op=True))
+    
+    for b in broadcasts:
+        b.wait()
+
+    total_numel = sum(p.numel() for p in module_params)
+    shape_prods = sum(p.numel() for p in module.parameters(recurse=False))
+    print(f"[Rank {rank}] Module '{module.__class__.__name__}' total module_params numel: {total_numel}, prod of shapes: {shape_prods}")
+
 
 
 def discard_params_after_forward(module):
