@@ -8,6 +8,7 @@ import torch.distributed as dist
 from typing import Callable
 
 
+class ShardedModuleState:
     rank_numels: list[int]
     module_meta: nn.Module
     shard: torch.Tensor
