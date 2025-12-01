@@ -31,11 +31,13 @@ class ZeroEngine:
                 std = (5 / local.numel()) ** 0.5
                 local.uniform_(-std, std, generator=g)
 
+                param = nn.Parameter(local, requires_grad=p.requires_grad)
                 *path, param_name = name.split('.')
                 parent = model
                 for attr in path:
                     parent = getattr(parent, attr)
-                self.original_register(parent, param_name, nn.Parameter(local, requires_grad=p.requires_grad))
+                #bypass parameter registration in pytorch module
+                object.__setattr__(parent, f"materialized_{param_name}", param)
 
     def __enter__(self):
         self.original_register = nn.Module.register_parameter
@@ -50,7 +52,7 @@ class ZeroEngine:
             return self.original_register(module_self, name, param)
         
         def gather_params_for_forward(module, input):
-            print(f"Rank: {self.rank}", module)
+            print(f"Rank: {self.rank} Shape: ", module)
 
 
         nn.Module.register_parameter = meta_register
