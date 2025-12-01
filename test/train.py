@@ -36,7 +36,7 @@ def dist_train():
         model = TestModel()
         total_params = sum(p.numel() for p in model.parameters())
         ze.materialize_sharded_params(model)
-        dummy_input = torch.randn(2, 16, device="meta")
+        dummy_input = torch.randn(2, 16, device="cpu")
         out = model.forward(dummy_input)
     
     print(f"[Rank {rank + 1}] Model output: {out.shape}")

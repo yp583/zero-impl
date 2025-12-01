@@ -22,15 +22,14 @@ class ZeroEngine:
         self.original_register = None
         self.hooks = []
 
-    def _flat_shard_numel(self, rank, shape):
-        numel = torch.Size(shape).numel()
+    def _flat_shard_numel(self, rank, numel):
         base = numel // self.world_size
         remainder = numel % self.world_size
         local_numel = base + (1 if rank < remainder else 0)
         return local_numel
-    # Add more functions for other types of sharding like by expert 
-    def _flat_shard_fn(self, shape):
-        rank_numels = [self._flat_shard_numel(i, shape) for i in range(self.world_size)]
+
+    def _flat_shard_fn(self, numel):
+        rank_numels = [self._flat_shard_numel(i, numel) for i in range(self.world_size)]
         local = torch.empty(rank_numels[self.rank], device=self.device).view(-1)
 
         if local.numel() == 0:
@@ -43,21 +42,13 @@ class ZeroEngine:
         return local, rank_numels
 
     def materialize_sharded_params(self, model):
-        g = torch.Generator(device=self.device).manual_seed(self.seed)
         with torch.no_grad():
-            for name, p in list(model.named_parameters()):
-                *path, param_name = name.split('.')
-                parent = model
-                for attr in path:
-                    parent = getattr(parent, attr)
+            for _, module in list(model.named_modules()):
+                if not has_direct_params(module):
+                    continue
+                shard_state = ShardedModuleState(world_size=self.world_size, meta=module, shard_fn=self._flat_shard_fn)
+                setattr(module, "_shard_state", shard_state)
                 
-                shard_state = getattr(parent, "_shard_state", None)
-                if shard_state is None:
-                    shard_state = ShardedParamState(world_size=self.world_size)
-                    setattr(parent, "_shard_state", shard_state)
-                
-                shard_state.add_param(self.rank, param_name, p, self._flat_shard_fn)
-
     def __enter__(self):
         self.original_register = nn.Module.register_parameter
 
