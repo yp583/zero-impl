@@ -70,12 +70,12 @@ class ZeroEngine:
                 return self.original_register(module_self, name, meta)
             return self.original_register(module_self, name, param)
         
-        def gather_params_for_forward(module, input):
-            print(f"Rank: {self.rank} Shape: ", module)
+        def gather_params_for_forward_hook(module, input):
+            fetch_params_for_module(rank=self.rank, world_size = self.world_size, module=module)
 
 
         nn.Module.register_parameter = meta_register
-        f_pre_hook = nn.modules.module.register_module_forward_pre_hook(gather_params_for_forward)
+        f_pre_hook = nn.modules.module.register_module_forward_pre_hook(gather_params_for_forward_hook)
         self.hooks.append(f_pre_hook)
         return self
 
