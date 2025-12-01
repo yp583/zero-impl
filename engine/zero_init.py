@@ -1,22 +1,46 @@
+from dataclasses import dataclass
 import torch
 import torch.nn as nn
+from engine.communication import ShardedParamState, fetch_params_for_module
+
+@dataclass
+class ZeroEngineConfig:
+    rank: int
+    world_size: int
+    seed: int
+    device: str
+    bucket_size: int #in bytes
 
 class ZeroEngine:
-    def __init__(self, rank, world_size, seed, device):
-        self.rank = rank
-        self.world_size = world_size
-        self.seed = seed
-        self.device = device
+    def __init__(self, config: ZeroEngineConfig):
+        self.rank = config.rank
+        self.world_size = config.world_size
+        self.seed = config.seed
+        self.device = config.device
+        self.bucket_size = config.bucket_size
+
         self.original_register = None
         self.hooks = []
 
-    # Add more functions for other types of sharding like by expert 
-    def _flat_shard_fn(self, shape):
+    def _flat_shard_numel(self, rank, shape):
         numel = torch.Size(shape).numel()
         base = numel // self.world_size
         remainder = numel % self.world_size
-        local_numel = base + (1 if self.rank < remainder else 0)
-        return torch.empty(local_numel, device=self.device).view(-1)
+        local_numel = base + (1 if rank < remainder else 0)
+        return local_numel
+    # Add more functions for other types of sharding like by expert 
+    def _flat_shard_fn(self, shape):
+        rank_numels = [self._flat_shard_numel(i, shape) for i in range(self.world_size)]
+        local = torch.empty(rank_numels[self.rank], device=self.device).view(-1)
+
+        if local.numel() == 0:
+            return local, rank_numels
+
+        std = (5 / local.numel()) ** 0.5
+        g = torch.Generator(device=self.device).manual_seed(self.seed)
+        local.uniform_(-std, std, generator=g)
+
+        return local, rank_numels
 
     def materialize_sharded_params(self, model):
         g = torch.Generator(device=self.device).manual_seed(self.seed)
