@@ -52,8 +52,15 @@ def fetch_params_for_module(rank, world_size, module) -> dict[str, nn.Parameter]
     return params
 
 def discard_params_after_forward(module):
-    # discard all params besides the ones for this rank
-    pass
+    shard_state: ShardedModuleState = getattr(module, "_shard_state", None)
+    if shard_state is None:
+        return
+
+    for name, param in module.named_parameters(recurse=False):
+        module._parameters[name] = nn.Parameter(
+            torch.empty(0, device=shard_state.shard.device, dtype=shard_state.shard.dtype),
+            requires_grad=param.requires_grad
+        )
 
 def gather_grads_for_backward(module):
     pass
