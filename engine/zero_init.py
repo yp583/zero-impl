@@ -64,13 +64,23 @@ class ZeroEngine:
                 return self.original_register(module_self, name, meta)
             return self.original_register(module_self, name, param)
         
-        def gather_params_for_forward_hook(module, input):
-            fetch_params_for_module(rank=self.rank, world_size = self.world_size, module=module)
+        def gather_params_for_forward_hook(module, _):
+            for m in module.modules():
+                params = fetch_params_for_module(rank=self.rank, world_size=self.world_size, module=m)
+                for name, p in params.items():
+                    m._parameters[name] = p
+
+        def discard_params_after_forward_hook(module, _, __):
+            for m in module.modules():
+                discard_params_after_forward(m)
+
 
 
         nn.Module.register_parameter = meta_register
         f_pre_hook = nn.modules.module.register_module_forward_pre_hook(gather_params_for_forward_hook)
+        f_post_hook = nn.modules.module.register_module_forward_hook(discard_params_after_forward_hook)
         self.hooks.append(f_pre_hook)
+        self.hooks.append(f_post_hook)
         return self
 
     def __exit__(self, *args, **kwargs):
