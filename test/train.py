@@ -25,7 +25,14 @@ def dist_train():
     data = ds_client.get_shard()
 
     #init model with the engine context
-    with ZeroEngine(rank=rank, world_size=world_size, seed=42, device="cpu") as ze:
+    zero_config = ZeroEngineConfig(
+        rank=rank,
+        world_size=world_size,
+        seed=42,
+        device="cpu",
+        bucket_size=int(10e3)
+    )
+    with ZeroEngine(config=zero_config) as ze:
         model = TestModel()
         total_params = sum(p.numel() for p in model.parameters())
         ze.materialize_sharded_params(model)
