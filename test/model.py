@@ -8,6 +8,7 @@ class TestModel(nn.Module):
         self.relu = nn.ReLU()
         self.attn = nn.MultiheadAttention(embed_dim=hidden_dim, num_heads=num_heads, batch_first=True)
         self.layer2 = nn.Linear(hidden_dim, output_dim)
+        self.learnable = nn.Parameter(torch.Tensor(1))
     
     def forward(self, x):
         x = self.layer1(x)
