@@ -6,6 +6,24 @@ def gather_params_for_forward(rank: int, module):
         # 3. add a seperate param not on meta that will have a materialized_ prefix and check if the module has it for the modules named params
 
     # recieve the params for the module from other ranks that dont have materialized version
+class ShardedParamState:
+    rank_numels: list[int]
+    materialized_params: dict[str, nn.Parameter]
+
+    def __init__(self, world_size):
+        self.rank_numels = [0] * world_size
+        self.materialized_params = {}
+
+    def add_param(self, rank, name: str, param: nn.Parameter, shard_fn: Callable[torch.Tensor, list[int]]):
+
+        shape, dtype = param._shape_dtype
+        local, rank_numels = shard_fn(shape)
+        local = local.to(dtype=dtype)
+
+        self.rank_numels = [a + b for a, b in zip(self.rank_numels, rank_numels)]
+
+        local_param = nn.Parameter(local, requires_grad=param.requires_grad)
+        self.materialized_params[name] = local_param
 
     for name, _ in module.named_parameters():
         materialized_param = getattr(module, f"materialized_{name}", None)

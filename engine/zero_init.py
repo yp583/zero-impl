@@ -46,22 +46,17 @@ class ZeroEngine:
         g = torch.Generator(device=self.device).manual_seed(self.seed)
         with torch.no_grad():
             for name, p in list(model.named_parameters()):
-                shape, dtype = p._shape_dtype
-                local = self._flat_shard_fn(shape).to(dtype=dtype, device=self.device)
-
-                if local.numel() == 0:
-                    continue
-
-                std = (5 / local.numel()) ** 0.5
-                local.uniform_(-std, std, generator=g)
-
-                param = nn.Parameter(local, requires_grad=p.requires_grad)
                 *path, param_name = name.split('.')
                 parent = model
                 for attr in path:
                     parent = getattr(parent, attr)
-                #bypass parameter registration in pytorch module
-                object.__setattr__(parent, f"materialized_{param_name}", param)
+                
+                shard_state = getattr(parent, "_shard_state", None)
+                if shard_state is None:
+                    shard_state = ShardedParamState(world_size=self.world_size)
+                    setattr(parent, "_shard_state", shard_state)
+                
+                shard_state.add_param(self.rank, param_name, p, self._flat_shard_fn)
 
     def __enter__(self):
         self.original_register = nn.Module.register_parameter
