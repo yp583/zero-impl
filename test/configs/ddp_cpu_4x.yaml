@@ -5,6 +5,7 @@ run:
   device: "cpu"
   precision: "fp32"
   profile: false
+  bucket_size: 10e3
 
 dist:
   world_size: 4
