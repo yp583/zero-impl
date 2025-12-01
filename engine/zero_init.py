@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import torch
 import torch.nn as nn
-from engine.communication import ShardedParamState, fetch_params_for_module
+from engine.communication import ShardedModuleState, fetch_params_for_module, discard_params_after_forward
 
 @dataclass
 class ZeroEngineConfig:
@@ -10,6 +10,9 @@ class ZeroEngineConfig:
     seed: int
     device: str
     bucket_size: int #in bytes
+
+def has_direct_params(module: nn.Module) -> bool:
+    return len(list(module.parameters(recurse=False))) > 0
 
 class ZeroEngine:
     def __init__(self, config: ZeroEngineConfig):
