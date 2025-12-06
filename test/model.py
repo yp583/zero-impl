@@ -1,6 +1,9 @@
 import torch
 import torch.nn as nn
 
+import os
+from engine.utils import graph_module
+
 class TestModel(nn.Module):
     def __init__(self, input_dim=16, hidden_dim=32, output_dim=4, num_heads=4):
         super().__init__()
@@ -8,7 +11,6 @@ class TestModel(nn.Module):
         self.relu = nn.ReLU()
         self.attn = nn.MultiheadAttention(embed_dim=hidden_dim, num_heads=num_heads, batch_first=True)
         self.layer2 = nn.Linear(hidden_dim, output_dim)
-        self.learnable = nn.Parameter(torch.Tensor(1))
     
     def forward(self, x):
         x = self.layer1(x)
@@ -23,4 +25,7 @@ class TestModel(nn.Module):
 
 if __name__ == "__main__":
     model = TestModel()
-    print(dict(model.named_parameters(recurse=False)).keys())
+    graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
+    os.makedirs(graph_dir, exist_ok=True)
+    graph_module(model, save_path=f"{graph_dir}/module_tree.png", include_params=True)
+    print([mod.__class__.__name__ for  mod in model.children()])

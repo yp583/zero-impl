@@ -3,6 +3,8 @@ import torch.distributed as dist
 from datasets.dev.dev_dataclient import DevDatasetClient
 from test.model import TestModel
 from engine.zero_init import ZeroEngine, ZeroEngineConfig
+from engine.profiler import MetaParamCounter
+from engine.utils import graph_module
 from dotenv import load_dotenv
 import os
 
@@ -25,22 +27,34 @@ def dist_train():
     data = ds_client.get_shard()
 
     #init model with the engine context
+    device = "cpu"
+    generator = torch.Generator(device=device).manual_seed(42)
+
     zero_config = ZeroEngineConfig(
         rank=rank,
         world_size=world_size,
-        seed=42,
-        device="cpu",
-
-        optimizer=None, 
+        generator=generator,
+        device=device,
     )
-    with ZeroEngine(config=zero_config) as ze:
-        model = TestModel()
-        total_params = sum(p.numel() for p in model.parameters())
-        ze.materialize_sharded_params(model)
-        dummy_input = torch.randn(2, 16, device="cpu")
-        out = model.forward(dummy_input)
+    
+    graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
+    with MetaParamCounter(graph_folder=graph_dir) as profiler:
+        with ZeroEngine(config=zero_config) as ze:
+            model = TestModel()
+            profiler.register_model(f"rank_{rank}", model)
+            ze.materialize_sharded_params(model)
+
+            dummy_input = torch.randn(2, 16, device=device, generator=generator)
+            target = torch.randint(0, 4, (2,), device=device, generator=generator)
+
+            out = model.forward(dummy_input)
+        # loss_fn = torch.nn.CrossEntropyLoss()
+        # loss = loss_fn(out, target)
+        # loss.backward()
     
     print(f"[Rank {rank + 1}] Model output: {out.shape}")
+
+
 
     #for each
         #forward
