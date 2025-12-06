@@ -20,7 +20,6 @@ class ZeroEngine:
         self.world_size = config.world_size
         self.seed = config.seed
         self.device = config.device
-        self.bucket_size = config.bucket_size
 
         self.original_register = None
         self.hooks = []
