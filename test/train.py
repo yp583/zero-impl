@@ -30,7 +30,8 @@ def dist_train():
         world_size=world_size,
         seed=42,
         device="cpu",
-        bucket_size=int(10e3)
+
+        optimizer=None, 
     )
     with ZeroEngine(config=zero_config) as ze:
         model = TestModel()

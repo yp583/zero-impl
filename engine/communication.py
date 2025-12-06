@@ -42,11 +42,9 @@ def fetch_params_for_module(rank, world_size, module) -> dict[str, nn.Parameter]
     module_params = [torch.empty(n, device=device, dtype=dtype) for n in shard_state.rank_numels]
     module_params[rank] = shard_state.shard
 
-    broadcasts = []
-    for r in range(world_size):
-        broadcasts.append(dist.broadcast(module_params[r], src=r, async_op=True))
-    for b in broadcasts:
-        b.wait()
+    all_gather_job = dist.all_gather(module_params, module_params[rank], async_op=True)
+
+    all_gather_job.wait()
 
     params = shard_state.from_flat(module_params)
     return params
