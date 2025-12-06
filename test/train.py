@@ -20,7 +20,7 @@ def dist_train():
     print(f"[Rank {rank + 1}/{world_size}] Process initialized successfully!")
 
     # Get Data
-    # HTTP eventually should be streamed during training loop
+    # HTTP eventually should be streamed during training loop by the engine
     ds_client = DevDatasetClient(rank=rank, world_size=world_size)
     data = ds_client.get_shard()
 
