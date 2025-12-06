@@ -56,7 +56,7 @@ def discard_params_after_forward(module):
 
     for name, param in module.named_parameters(recurse=False):
         module._parameters[name] = nn.Parameter(
-            torch.empty(0, device=shard_state.shard.device, dtype=shard_state.shard.dtype),
+            torch.empty(0, device="meta", dtype=shard_state.shard.dtype),
             requires_grad=param.requires_grad
         )
 
