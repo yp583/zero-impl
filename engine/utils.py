@@ -4,6 +4,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import torch.distributed as dist
 
+from engine.communication import ShardedModuleState
+
 def get_tensor_bytes(t: torch.Tensor) -> int:
     return t.element_size() * t.shape().prod().item()
 
@@ -53,7 +55,6 @@ def hierarchy_pos(G, root, width=1.0, vert_gap=0.2, xcenter=0.5):
     _hierarchy(root, 0, width)
     return pos
 
-
 def graph_module(module: nn.Module, save_path: str = None, include_params: bool = False):
     adj_list = get_module_tree(module, include_params=include_params)
     G = nx.DiGraph(adj_list)
@@ -78,3 +79,13 @@ def graph_module(module: nn.Module, save_path: str = None, include_params: bool 
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
     else:
         plt.show()
+
+def get_shard_numels(model: nn.Module):
+    model_numels = {}
+    for name, module in model.named_modules():
+        shard_state: ShardedModuleState = getattr(module, "_shard_state", None)
+        if shard_state is None:
+            continue
+        full_numel = sum(p.numel() for p in module.parameters())
+        model_numels[name] = f"{shard_state.shard.numel()} / {full_numel}"
+    return model_numels

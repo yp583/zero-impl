@@ -25,7 +25,6 @@ class TestModel(nn.Module):
 
 if __name__ == "__main__":
     model = TestModel()
-    graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
-    os.makedirs(graph_dir, exist_ok=True)
-    graph_module(model, save_path=f"{graph_dir}/module_tree.png", include_params=True)
-    print([mod.__class__.__name__ for  mod in model.children()])
+    # graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
+    # graph_module(model, save_path=f"{graph_dir}/module_tree.png", include_params=True)
+    print([name for name, _ in model.named_parameters()])

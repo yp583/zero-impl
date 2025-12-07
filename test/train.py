@@ -4,7 +4,7 @@ from datasets.dev.dev_dataclient import DevDatasetClient
 from test.model import TestModel
 from engine.zero_init import ZeroEngine, ZeroEngineConfig
 from engine.profiler import MetaParamCounter
-from engine.utils import graph_module
+from engine.utils import get_shard_numels, graph_module
 from dotenv import load_dotenv
 import os
 
@@ -42,15 +42,16 @@ def dist_train():
         with ZeroEngine(config=zero_config) as ze:
             model = TestModel()
             profiler.register_model(f"rank_{rank}", model)
-            ze.materialize_sharded_params(model)
+            ze.register_model(model)
+            print(f"[Rank {rank + 1}]: {get_shard_numels(model)}")
 
-            dummy_input = torch.randn(2, 16, device=device, generator=generator)
-            target = torch.randint(0, 4, (2,), device=device, generator=generator)
+            dummy_input = torch.rand(2, 16, device=device, generator=generator)
+            target = torch.rand(2, 4, device=device, generator=generator)
 
             out = model.forward(dummy_input)
-        # loss_fn = torch.nn.CrossEntropyLoss()
-        # loss = loss_fn(out, target)
-        # loss.backward()
+            loss_fn = torch.nn.CrossEntropyLoss()
+            loss = loss_fn(out, target)
+            loss.backward()
     
     print(f"[Rank {rank + 1}] Model output: {out.shape}")
 

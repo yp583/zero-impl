@@ -59,28 +59,35 @@ class MetaParamCounter:
 
             plt.close()
 
+    def _create_snapshot(self, module, suffix: str):
+        for name, model in self.models.items():
+            all_modules = set(model.modules())
+            if module not in all_modules:
+                continue
+
+            materialized = 0
+            total = 0
+            for p in model.parameters(recurse=True):
+                total += p.numel()
+                if p.device.type != 'meta':
+                    materialized += p.numel()
+
+            self.snapshots[name].append(ModelSnapshot(
+                trigger_module=f"{module.__class__.__name__}_{suffix}",
+                materialized_numel=materialized,
+                total_numel=total
+            ))
+
     def __enter__(self):
         def forward_hook(module, *args):
-            for name, model in self.models.items():
-                all_modules = set(model.modules())
-                if module not in all_modules:
-                    continue
+            self._create_snapshot(module, "forward")
 
-                materialized = 0
-                total = 0
-                for p in model.parameters(recurse=True):
-                    total += p.numel()
-                    if p.device.type != 'meta':
-                        materialized += p.numel()
+        def backward_hook(module, *args):
+            self._create_snapshot(module, "backward")
 
-                self.snapshots[name].append(ModelSnapshot(
-                    trigger_module=module.__class__.__name__,
-                    materialized_numel=materialized,
-                    total_numel=total
-                ))
-
-        hook = nn.modules.module.register_module_forward_hook(forward_hook)
-        self.hooks.append(hook)
+        fwd_hook = nn.modules.module.register_module_forward_hook(forward_hook)
+        bwd_hook = nn.modules.module.register_module_full_backward_hook(backward_hook)
+        self.hooks.extend([fwd_hook, bwd_hook])
         return self
 
     def __exit__(self, *args, **kwargs):
