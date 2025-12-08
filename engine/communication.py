@@ -12,9 +12,10 @@ class ShardedModuleState:
     module_meta: nn.Module
     shard: nn.Parameter
 
-    def __init__(self, meta: nn.Module, shard_fn: Callable[int, tuple[nn.Parameter, list[int]]], model_numel: int):
+    def __init__(self, meta: nn.Module, shard_fn: Callable[int, tuple[nn.Parameter, list[int]]]):
         self.param_shapes = {}
-        self.shard, self.rank_numels = shard_fn(model_numel)
+        module_numel = sum(p.numel() for p in meta.parameters())
+        self.shard, self.rank_numels = shard_fn(module_numel)
         self.module_meta = meta
 
     def from_flat(self, flat_tensors: list[torch.Tensor]):

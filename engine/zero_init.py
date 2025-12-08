@@ -13,16 +13,6 @@ from engine.utils import has_direct_params, rank0_print
 import warnings
 warnings.filterwarnings("ignore", message="Full backward hook")
 
-
-# flow
-# call with engine
-# make optimizer 
-# make model
-# call engine.materialize()     
-#   - should init the local parameters
-#   - register that with the optimizer
-# 
-
 @dataclass
 class ZeroEngineConfig:
     rank: int
@@ -67,15 +57,13 @@ class ZeroEngine:
     def _materialize_sharded_params(self, model):
         materialized_params = []
         with torch.no_grad():
-            model_numel = sum(p.numel() for p in model.parameters())
             leaf_modules = deque([model])
             while len(leaf_modules) > 0:
                 module = leaf_modules.popleft()
                 if not has_direct_params(module):
                     leaf_modules.extend(module.children())
                     continue
-                module_numel = sum(p.numel() for p in module.parameters(recurse=True))
-                shard_state = ShardedModuleState(meta=module, shard_fn=self._flat_shard_fn, model_numel=module_numel)
+                shard_state = ShardedModuleState(meta=module, shard_fn=self._flat_shard_fn)
                 materialized_params.append(shard_state.shard)
                 setattr(module, "_shard_state", shard_state)
 
