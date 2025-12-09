@@ -82,10 +82,20 @@ def graph_module(module: nn.Module, save_path: str = None, include_params: bool 
 
 def get_shard_numels(model: nn.Module):
     model_numels = {}
-    for name, module in model.named_modules():
-        shard_state: ShardedModuleState = getattr(module, "_shard_state", None)
-        if shard_state is None:
-            continue
-        full_numel = sum(p.numel() for p in module.parameters())
-        model_numels[name] = f"{shard_state.shard.numel()} / {full_numel}"
+    for name, param in model.named_parameters():
+        sharded_param = getattr(param, "_shard_state", None)
+        shard_numel = sharded_param.materialized.numel() if sharded_param is not None and sharded_param.materialized is not None else 0
+        full_numel = param.numel()
+        model_numels[name] = f"{shard_numel} / {full_numel}"
     return model_numels
+
+def overlap(interval_a: tuple[int], interval_b: tuple[int]) -> tuple[int, int] | None:
+    start_a, end_a = interval_a
+    start_b, end_b = interval_b
+
+    start = max(start_a, start_b)
+    end = min(end_a, end_b)
+
+    if start >= end:
+        return None  # No overlap
+    return (start, end)
