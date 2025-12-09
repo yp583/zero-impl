@@ -4,8 +4,6 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import torch.distributed as dist
 
-from engine.communication import ShardedModuleState
-
 def get_tensor_bytes(t: torch.Tensor) -> int:
     return t.element_size() * t.shape().prod().item()
 
@@ -16,6 +14,16 @@ def has_direct_params(module: nn.Module) -> bool:
 def rank0_print(*args, **kwargs):
     if not dist.is_initialized() or dist.get_rank() == 0:
         print(*args, **kwargs)
+
+def rank_print(*args, rank_filter = None, **kwargs):
+    if dist.is_initialized():
+        rank = dist.get_rank()
+        if rank_filter is not None and rank not in rank_filter:
+            return
+    else:
+        rank = 0
+    print(f"[Rank {rank}]", *args, **kwargs)
+
 
 def get_module_tree(module: nn.Module, include_params: bool = False) -> dict[str, list[str]]:
     adj_list = {}

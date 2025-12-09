@@ -1,80 +1,96 @@
 from collections import deque
 from dataclasses import dataclass, field
-from typing import Iterable, Type
 import torch
 import torch.nn as nn
 from engine.communication import (
-    ShardedModuleState,
+    ShardedParameterState,
     gather_params_for_module,
     discard_params_for_module,
 )
+import torch.distributed as dist
 
-from engine.utils import has_direct_params, rank0_print
+from engine.utils import has_direct_params, overlap, rank0_print
 import warnings
 warnings.filterwarnings("ignore", message="Full backward hook")
 
 @dataclass
 class ZeroEngineConfig:
-    rank: int
-    world_size: int
     generator: torch.Generator
     device: str
 
 class ZeroEngine:
     def __init__(self, config: ZeroEngineConfig):
-        self.rank = config.rank
-        self.world_size = config.world_size
         self.generator = config.generator
         self.device = config.device
 
         self.original_register = None
         self.hooks = []
-        self.leaf_modules = set()
-
-
-    def _flat_shard_fn(self, numel):
-        def _flat_shard_numel(rank, numel):
-            base = numel // self.world_size
-            remainder = numel % self.world_size
-            local_numel = base + (1 if rank < remainder else 0)
-            return local_numel
-        
-        rank_numels = [_flat_shard_numel(i, numel) for i in range(self.world_size)]
-        param_data = torch.empty(rank_numels[self.rank], device=self.device).view(-1)
-
-        if param_data.numel() == 0:
-            return nn.Parameter(param_data), rank_numels
-
-        std = (5 / param_data.numel()) ** 0.5
-        param_data.uniform_(-std, std, generator=self.generator)
-
-        param = nn.Parameter(param_data)
-        return param, rank_numels
 
     def register_model(self, model):
+        self._assign_hooks(model)
         self._materialize_sharded_params(model)
         
-    def _materialize_sharded_params(self, model):
-        materialized_params = []
-        with torch.no_grad():
-            leaf_modules = deque([model])
-            while len(leaf_modules) > 0:
-                module = leaf_modules.popleft()
-                if not has_direct_params(module):
-                    leaf_modules.extend(module.children())
-                    continue
-                shard_state = ShardedModuleState(meta=module, shard_fn=self._flat_shard_fn)
-                materialized_params.append(shard_state.shard)
-                setattr(module, "_shard_state", shard_state)
-
-                f_pre_hook = module.register_forward_pre_hook(gather_params_for_module)
-                f_post_hook = module.register_forward_hook(discard_params_for_module)
-                b_pre_hook = module.register_full_backward_pre_hook(gather_params_for_module)
-                b_post_hook = module.register_full_backward_hook(discard_params_for_module)
-
-                self.hooks.extend([f_pre_hook, f_post_hook, b_pre_hook, b_post_hook])
-        return materialized_params
     
+    def _assign_hooks(self, model):
+        leaf_modules = deque([model])
+        while len(leaf_modules) > 0:
+            module = leaf_modules.popleft()
+            if not has_direct_params(module):
+                leaf_modules.extend(module.children())
+                continue
+
+            f_pre_hook = module.register_forward_pre_hook(gather_params_for_module)
+            f_post_hook = module.register_forward_hook(discard_params_for_module)
+            b_pre_hook = module.register_full_backward_pre_hook(gather_params_for_module)
+            b_post_hook = module.register_full_backward_hook(discard_params_for_module)
+
+            self.hooks.extend([f_pre_hook, f_post_hook, b_pre_hook, b_post_hook])
+
+    def _materialize_sharded_params(self, model: nn.Module):
+        total_numel = sum([param.numel() for param in model.parameters()])
+        rank = dist.get_rank()
+        world_size = dist.get_world_size()
+        curr_offset = 0
+        rank_offsets = []
+        for r in range(world_size):
+            rank_offsets.append(curr_offset)
+            curr_offset += total_numel // world_size + (total_numel % world_size > r)
+        else:
+            rank_offsets.append(curr_offset)
+
+        def get_interval_for_rank(rank: int, curr_offset: int, param_numel: int) -> tuple[int]:
+            rank_model_interval = (rank_offsets[rank], rank_offsets[rank + 1])
+            curr_param_interval = (curr_offset, curr_offset + param_numel)
+            overlap_interval = overlap(rank_model_interval, curr_param_interval)
+
+            if overlap_interval is None:
+                return None
+            
+            return overlap_interval
+
+        curr = 0
+        for param_meta in model.parameters():
+            materialized = None
+            rank_param_intervals = []
+
+            for r in range(world_size):
+                interval = get_interval_for_rank(r, curr, param_meta.numel())
+
+                if interval is None:
+                    rank_param_intervals.append(None)
+                    continue
+
+                # Store both start and end for this rank
+                rank_param_intervals.append(interval)
+            
+                if rank == r:
+                    materialized = torch.empty(interval[1] - interval[0], device=self.device)
+                    materialized.uniform_(-0.05, 0.05, generator=self.generator)
+                    
+            sharded_param_state = ShardedParameterState(param_meta=param_meta, materialized=materialized, rank_intervals=rank_param_intervals)
+            setattr(param_meta, "_shard_state", sharded_param_state)
+        
+            curr += param_meta.numel()
 
     def _override_param_register(self):
         self.original_register = nn.Module.register_parameter

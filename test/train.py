@@ -31,8 +31,6 @@ def dist_train():
     generator = torch.Generator(device=device).manual_seed(42)
 
     zero_config = ZeroEngineConfig(
-        rank=rank,
-        world_size=world_size,
         generator=generator,
         device=device,
     )
@@ -43,7 +41,6 @@ def dist_train():
             model = TestModel()
             profiler.register_model(f"rank_{rank}", model)
             ze.register_model(model)
-            print(f"[Rank {rank + 1}]: {get_shard_numels(model)}")
 
             dummy_input = torch.rand(2, 16, device=device, generator=generator)
             target = torch.rand(2, 4, device=device, generator=generator)
