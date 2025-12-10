@@ -113,7 +113,6 @@ class ZeroEngine:
     def _override_optimizer_init(self):
         self.original_optimizer_subclass_init = torch.optim.Optimizer.__init_subclass__
 
-        @classmethod
         def optimizer_subclass_init(cls, **kwargs):
             orig_init = cls.__init__
 
@@ -125,18 +124,22 @@ class ZeroEngine:
 
             def pass_only_materialized(optim_self, parameters: Iterator[nn.Parameter], *args, **kwargs):
                 materialized_parameters = map(get_shard, parameters)
-                materialized_parameters = filter[nn.Parameter](lambda p: p != None, materialized_parameters)
+                materialized_parameters = filter(lambda p: p != None, materialized_parameters)
                 return orig_init(optim_self, materialized_parameters, *args, **kwargs)
             cls.__init__ = pass_only_materialized
             setattr(cls, "_orig_init", orig_init)
             self.original_optimizer_subclass_init()
         
-        torch.optim.Optimizer.__init_subclass__ = optimizer_subclass_init
+        @classmethod
+        def class_optimizer_subclass_init(cls, **kwargs):
+            optimizer_subclass_init(cls, **kwargs)
+        torch.optim.Optimizer.__init_subclass__ = class_optimizer_subclass_init
         for cls in torch.optim.Optimizer.__subclasses__():
             optimizer_subclass_init(cls)
 
     def __enter__(self):
         self._override_param_register()
+        self._override_optimizer_init()
 
         return self
 
