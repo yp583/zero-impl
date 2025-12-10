@@ -44,7 +44,7 @@ class ZeroEngine:
             f_pre_hook = module.register_forward_pre_hook(gather_params_for_module)
             f_post_hook = module.register_forward_hook(discard_params_for_module)
             b_pre_hook = module.register_full_backward_pre_hook(gather_params_for_module)
-            b_post_hook = module.register_full_backward_hook(discard_params_for_module)
+            b_post_hook = module.register_full_backward_hook(discard_params_for_module_backwards)
 
             self.hooks.extend([f_pre_hook, f_post_hook, b_pre_hook, b_post_hook])
 
