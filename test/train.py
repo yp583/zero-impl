@@ -94,7 +94,7 @@ def dist_train():
                 loss_profiler.record(loss)
 
             avg_loss = epoch_loss / len(dataset_tensors)
-            rank0_print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
+            rank_print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
 
     #for each
         #forward
