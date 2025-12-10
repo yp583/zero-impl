@@ -19,6 +19,13 @@ class ShardedParameterState:
         self.materialized = materialized
         self.rank_intervals = rank_intervals
 
+def _get_module_param(module: nn.Module, name: str) -> nn.Parameter:
+    parts = name.split('.')
+    target = module
+    for part in parts[:-1]:
+        target = getattr(target, part)
+    return target._parameters[parts[-1]]
+
 def _set_module_param(module: nn.Module, name: str, new_param: nn.Parameter):
     parts = name.split('.')
     target = module
@@ -94,16 +101,28 @@ def gather_params_for_module(module: nn.Module, *_, **__):
     curr_offset = 0
     for name, param in module.named_parameters():
         param_data = flat_params[curr_offset:curr_offset+param.numel()].reshape(param.shape)
-        
+
         if param.device.type == 'meta':
             set_param_materialized(module, name, param, param_data)
+            param = _get_module_param(module, name)
         else:
             param.data = param_data
-        
+
+        shard_state = getattr(param, "_shard_state", None)
+        if shard_state is not None:
+            interval = shard_state.rank_intervals[rank]
+            if interval is not None:
+                def grad_hook(grad, st=shard_state, intv=interval):
+                    start, end = intv
+                    st.materialized.grad = grad.flatten()[start:end]
+                param.register_hook(grad_hook)
+
         curr_offset += param.numel()
 
 def discard_params_for_module(module: nn.Module, *_, **__):
     for name, param in module.named_parameters():
-        if getattr(param, "_shard_state", None) is None:
-            continue
+        set_param_meta(module, name, param)
+
+def discard_params_for_module_backwards(module: nn.Module, *_, **__):
+    for name, param in module.named_parameters():
         set_param_meta(module, name, param)
