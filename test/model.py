@@ -13,10 +13,11 @@ class TestModel(nn.Module):
         self.layer2 = nn.Linear(hidden_dim, output_dim)
     
     def forward(self, x):
+        if x.dim() == 1:
+            x = x.unsqueeze(0)
         x = self.layer1(x)
         x = self.relu(x)
-        if x.dim() == 2:
-            x = x.unsqueeze(1)
+        x = x.unsqueeze(1)
         attn_output, _ = self.attn(x, x, x)
         attn_output = self.relu(attn_output)
         attn_output = attn_output.squeeze(1)
