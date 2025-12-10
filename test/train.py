@@ -1,10 +1,11 @@
 import torch
 import torch.distributed as dist
+from contextlib import ExitStack
 from datasets.dev.dev_dataclient import DevDatasetClient
 from test.model import TestModel
 from engine.zero_init import ZeroEngine, ZeroEngineConfig
-from engine.profiler import MetaParamCounter
-from engine.utils import get_shard_numels, graph_module
+from engine.profilers import MetaParamCounter, LossProfiler
+from engine.utils import get_shard_numels, graph_module, rank0_print, rank_print
 from dotenv import load_dotenv
 import os
 
@@ -36,23 +37,64 @@ def dist_train():
     )
     
     graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
-    with MetaParamCounter(graph_folder=graph_dir) as profiler:
-        with ZeroEngine(config=zero_config) as ze:
-            model = TestModel()
-            profiler.register_model(f"rank_{rank}", model)
-            ze.register_model(model)
+    loss_graph_path = os.path.join(graph_dir, f"loss_rank_{rank}.png")
 
-            dummy_input = torch.rand(2, 16, device=device, generator=generator)
-            target = torch.rand(2, 4, device=device, generator=generator)
+    with ExitStack() as stack:
+        profiler = stack.enter_context(MetaParamCounter(graph_folder=graph_dir))
+        ze = stack.enter_context(ZeroEngine(config=zero_config))
+        loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path))
 
-            out = model.forward(dummy_input)
-            loss_fn = torch.nn.CrossEntropyLoss()
-            loss = loss_fn(out, target)
-            loss.backward()
-    
-    print(f"[Rank {rank + 1}] Model output: {out.shape}")
+        model = TestModel(input_dim=128, output_dim=128)
+        profiler.register_model(f"rank_{rank}", model)
+        ze.register_model(model)
 
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
+        # rank_print(get_shard_numels(model))
+
+        # Convert dataset to tensors
+        dataset_tensors = []
+        for data_point, label in data:
+            input_tensor = torch.tensor(data_point, dtype=torch.float32, device=device)
+            label_tensor = torch.tensor(label, dtype=torch.long, device=device)
+            dataset_tensors.append((input_tensor, label_tensor))
+
+        loss_fn = torch.nn.CrossEntropyLoss()
+        num_epochs = 10
+
+        # Training loop
+        for epoch in range(num_epochs):
+            epoch_loss = 0.0
+
+            for idx, (input_data, target) in enumerate(dataset_tensors):
+                # Forward pass
+                out = model.forward(input_data)
+                loss = loss_fn(out, target.unsqueeze(0))
+
+                # Backward pass
+                loss.backward()
+
+                # Debug: verify gradients are preserved on shards
+                if epoch == 0 and idx == 0:
+                    for name, param in model.named_parameters():
+                        shard_state = getattr(param, "_shard_state", None)
+                        if shard_state and shard_state.materialized is not None:
+                            grad = shard_state.materialized.grad
+                            if grad is not None:
+                                rank_print(f"✓ {name}: grad shape={grad.shape}, mean={grad.mean():.6f}")
+                            else:
+                                rank_print(f"✗ {name}: grad is None!")
+
+                # Optimizer step
+                optimizer.step()
+                optimizer.zero_grad()
+
+                epoch_loss += loss.item()
+
+                loss_profiler.record(loss)
+
+            avg_loss = epoch_loss / len(dataset_tensors)
+            rank0_print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
 
     #for each
         #forward

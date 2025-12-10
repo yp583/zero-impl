@@ -1,5 +1,6 @@
 from collections import deque
 from dataclasses import dataclass, field
+from typing import Iterator
 import torch
 import torch.nn as nn
 from engine.communication import (
@@ -24,6 +25,7 @@ class ZeroEngine:
         self.device = config.device
 
         self.original_register = None
+        self.original_optimizer_subclass_init = None
         self.hooks = []
 
     def register_model(self, model):
@@ -81,11 +83,14 @@ class ZeroEngine:
                     continue
 
                 # Store both start and end for this rank
+                if interval is not None:
+                    interval = (interval[0] - curr, interval[1] - curr)
                 rank_param_intervals.append(interval)
             
                 if rank == r:
-                    materialized = torch.empty(interval[1] - interval[0], device=self.device)
-                    materialized.uniform_(-0.05, 0.05, generator=self.generator)
+                    data = torch.empty(interval[1] - interval[0], device=self.device)
+                    data.uniform_(-0.05, 0.05, generator=self.generator)
+                    materialized = nn.Parameter(data, requires_grad=param_meta.requires_grad)
                     
             sharded_param_state = ShardedParameterState(param_meta=param_meta, materialized=materialized, rank_intervals=rank_param_intervals)
             setattr(param_meta, "_shard_state", sharded_param_state)
@@ -105,25 +110,30 @@ class ZeroEngine:
 
         nn.Module.register_parameter = meta_register
     
-    # def _override_optimizer_init(self):
-    #     @classmethod
-    #     def optimizer_subclass_init(cls, **kwargs):
-    #         orig_init = cls.__init__
-    #         def pass_only_materialized(optim_self, parameters, *args, **kwargs):
-    #             # INSERT_YOUR_CODE
-    #             # Filter out parameters whose device is meta
-    #             if isinstance(parameters, torch.nn.Module):
-    #                 # If a module was passed, get its parameters
-    #                 parameters = list(parameters.parameters())
-    #             # If parameters is an iterator, convert to list so we can filter
-    #             parameters = list(parameters)
-    #             filtered_parameters = [p for p in parameters if getattr(p, 'device', None) is not None and p.device.type != 'meta']
-    #             return orig_init(optim_self, filtered_parameters, *args, **kwargs)
-    #             orig_init()
+    def _override_optimizer_init(self):
+        self.original_optimizer_subclass_init = torch.optim.Optimizer.__init_subclass__
 
+        @classmethod
+        def optimizer_subclass_init(cls, **kwargs):
+            orig_init = cls.__init__
 
-    #         cls.__init__ = 
-    #     torch.optim.Optimizer.__init_subclass__ = optimizer_subclass_init
+            def get_shard(param: nn.Parameter) -> nn.Parameter | None:
+                shard_state: ShardedParameterState = getattr(param, "_shard_state", None)
+                if shard_state is None or shard_state.materialized is None:
+                    return None
+                return shard_state.materialized
+
+            def pass_only_materialized(optim_self, parameters: Iterator[nn.Parameter], *args, **kwargs):
+                materialized_parameters = map(get_shard, parameters)
+                materialized_parameters = filter[nn.Parameter](lambda p: p != None, materialized_parameters)
+                return orig_init(optim_self, materialized_parameters, *args, **kwargs)
+            cls.__init__ = pass_only_materialized
+            setattr(cls, "_orig_init", orig_init)
+            self.original_optimizer_subclass_init()
+        
+        torch.optim.Optimizer.__init_subclass__ = optimizer_subclass_init
+        for cls in torch.optim.Optimizer.__subclasses__():
+            optimizer_subclass_init(cls)
 
     def __enter__(self):
         self._override_param_register()
@@ -132,5 +142,11 @@ class ZeroEngine:
 
     def __exit__(self, *args, **kwargs):
         nn.Module.register_parameter = self.original_register
+        torch.optim.Optimizer.__init_subclass__ = self.original_optimizer_subclass_init
+        for cls in torch.optim.Optimizer.__subclasses__():
+            orig_init = getattr(cls, "_orig_init", None)
+            if orig_init is not None:
+                cls.__init__ = orig_init
+
         for hook in self.hooks:
             hook.remove()
