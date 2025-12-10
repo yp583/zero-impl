@@ -1,8 +1,8 @@
-
+from engine.config import UNEVEN_COMMS
 def all_gather_uneven(tensor_list, tensor, group=None, async_op=False):
     rank = dist.get_rank(group)
     backend = dist.get_backend(group)
-    supports_uneven = UNEVEN_GATHERS.get(backend, False)
+    supports_uneven = UNEVEN_COMMS.get(backend, False)
 
     if not supports_uneven:
         original_sizes = [t.numel() for t in tensor_list]
