@@ -7,6 +7,7 @@ from engine.communication import (
     ShardedParameterState,
     gather_params_for_module,
     discard_params_for_module,
+    discard_params_for_module_backwards,
 )
 import torch.distributed as dist
 

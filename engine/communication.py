@@ -7,7 +7,8 @@ import torch.nn as nn
 import torch.distributed as dist
 from typing import Callable, Optional
 
-from engine.utils import all_gather_uneven, reduce_scatter_uneven
+from engine.utils import all_gather_uneven
+from engine.utils.distributed import rank_print
 
 class ShardedParameterState:
     param_meta: nn.Parameter
