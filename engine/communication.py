@@ -79,6 +79,17 @@ def to_flat(shards: list[ShardedParameterState], device="cpu") -> list[torch.Ten
     
     return flat_data
 
+def reduce_scatter_grads(grad, st: ShardedParameterState):
+    # need to add reduce scatter to send grads to other ranks adn collect other ranks version sof this materialized param
+    flat_grad = grad.flatten()
+    rank = dist.get_rank()
+    rank_grads = [
+        flat_grad[start:end] if interval is not None else torch.empty(0, dtype=flat_grad.dtype, device=flat_grad.device)
+        for interval in st.rank_intervals
+        for (start, end) in [interval] if interval is not None or True
+    ]
+    this_grad = torch.empty(st.rank_intervals[rank][1] - st.rank_intervals[rank][0])
+    dist.reduce_scatter(this_grad, rank_grads, op=dist.ReduceOp.SUM)
 
 
 def gather_params_for_module(module: nn.Module, *_, **__):
@@ -113,9 +124,7 @@ def gather_params_for_module(module: nn.Module, *_, **__):
         if shard_state is not None:
             interval = shard_state.rank_intervals[rank]
             if interval is not None:
-                def grad_hook(grad, st=shard_state, intv=interval):
-                    start, end = intv
-                    st.materialized.grad = grad.flatten()[start:end]
+                grad_hook = partial(reduce_scatter_grads, st=shard_state)
                 param.register_hook(grad_hook)
 
         curr_offset += param.numel()

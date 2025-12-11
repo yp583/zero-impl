@@ -74,17 +74,6 @@ def dist_train():
                 # Backward pass
                 loss.backward()
 
-                # Debug: verify gradients are preserved on shards
-                if epoch == 0 and idx == 0:
-                    for name, param in model.named_parameters():
-                        shard_state = getattr(param, "_shard_state", None)
-                        if shard_state and shard_state.materialized is not None:
-                            grad = shard_state.materialized.grad
-                            if grad is not None:
-                                rank_print(f"✓ {name}: grad shape={grad.shape}, mean={grad.mean():.6f}")
-                            else:
-                                rank_print(f"✗ {name}: grad is None!")
-
                 # Optimizer step
                 optimizer.step()
                 optimizer.zero_grad()
