@@ -4,11 +4,11 @@ from typing import Iterator
 import torch
 import torch.nn as nn
 from engine.communication import (
-    ShardedParameterState,
     gather_params_for_module,
     discard_params_for_module,
     discard_params_for_module_backwards,
 )
+from engine.sharded_param import ShardedParameterState
 import torch.distributed as dist
 
 from engine.utils import has_direct_params, overlap, rank0_print

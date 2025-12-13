@@ -17,15 +17,29 @@ class TestModel(nn.Module):
             x = x.unsqueeze(0)
         x = self.layer1(x)
         x = self.relu(x)
-        x = x.unsqueeze(1)
         attn_output, _ = self.attn(x, x, x)
         attn_output = self.relu(attn_output)
-        attn_output = attn_output.squeeze(1)
         x = self.layer2(attn_output)
-        return x
+        # nn.CrossEntropyLoss expects (N, C) output for classification
+        # We'll take the first time-step only for loss (reshape to (batch, C))
+        return x[:, 0, :] if x.dim() == 3 else x
 
 if __name__ == "__main__":
     model = TestModel()
-    # graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
-    # graph_module(model, save_path=f"{graph_dir}/module_tree.png", include_params=True)
-    print([name for name, _ in model.named_parameters()])
+
+    def attn_backward_hook(module: nn.Module, grad_input, grad_output):
+        print("[Parameters]: ]\n", [pname for pname, _ in module.named_parameters()])
+        print("[Grad Input]: \n", [gi.shape for gi in grad_input if gi is not None])
+        print("[Grad Output]: \n", [go.shape for go in grad_output if go is not None])
+
+    # Register full backward hook on the attn layer
+    model.attn.register_full_backward_hook(attn_backward_hook)
+
+    # Do a small forward and backward pass
+    x = torch.randn(8, 4, 16)  # batch of 8, sequence len 4, input_dim=16
+    out = model(x)
+    target = torch.randint(0, 4, (8,))  # output_dim=4, 8 samples: shape [8]
+
+    loss_fn = nn.CrossEntropyLoss()
+    loss = loss_fn(out, target)
+    loss.backward()
