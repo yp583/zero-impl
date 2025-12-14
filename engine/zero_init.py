@@ -1,18 +1,20 @@
 from collections import deque
 from dataclasses import dataclass, field
+from functools import partial
 from typing import Iterator
 import torch
 import torch.nn as nn
 from engine.communication import (
     gather_params_for_module,
     discard_params_for_module,
-    discard_params_for_module_backwards,
 )
 from engine.sharded_param import ShardedParameterState
 import torch.distributed as dist
 
 from engine.utils import has_direct_params, overlap, rank0_print
 import warnings
+
+from engine.utils.math import get_slice_numel, shift_slice
 warnings.filterwarnings("ignore", message="Full backward hook")
 
 @dataclass
@@ -35,6 +37,11 @@ class ZeroEngine:
         
     
     def _assign_hooks(self, model):
+        forward_gather = partial(gather_params_for_module, device=self.device, backwards=False)
+        backward_gather = partial(gather_params_for_module, device=self.device, backwards=True)
+        forward_discard = partial(discard_params_for_module, device=self.device, backwards=False)
+        backward_discard = partial(discard_params_for_module, device=self.device, backwards=True)
+
         leaf_modules = deque([model])
         while len(leaf_modules) > 0:
             module = leaf_modules.popleft()
@@ -42,10 +49,10 @@ class ZeroEngine:
                 leaf_modules.extend(module.children())
                 continue
 
-            f_pre_hook = module.register_forward_pre_hook(gather_params_for_module)
-            f_post_hook = module.register_forward_hook(discard_params_for_module)
-            b_pre_hook = module.register_full_backward_pre_hook(gather_params_for_module)
-            b_post_hook = module.register_full_backward_hook(discard_params_for_module_backwards)
+            f_pre_hook = module.register_forward_pre_hook(forward_gather)
+            f_post_hook = module.register_forward_hook(forward_discard)
+            b_pre_hook = module.register_full_backward_pre_hook(backward_gather)
+            b_post_hook = module.register_full_backward_hook(backward_discard)
 
             self.hooks.extend([f_pre_hook, f_post_hook, b_pre_hook, b_post_hook])
 
@@ -61,7 +68,7 @@ class ZeroEngine:
         else:
             rank_offsets.append(curr_offset)
 
-        def get_interval_for_rank(rank: int, curr_offset: int, param_numel: int) -> tuple[int]:
+        def get_interval_for_rank(rank: int, curr_offset: int, param_numel: int) -> slice:
             rank_model_interval = (rank_offsets[rank], rank_offsets[rank + 1])
             curr_param_interval = (curr_offset, curr_offset + param_numel)
             overlap_interval = overlap(rank_model_interval, curr_param_interval)
@@ -69,34 +76,32 @@ class ZeroEngine:
             if overlap_interval is None:
                 return None
             
-            return overlap_interval
+            return slice(overlap_interval[0], overlap_interval[1])
 
-        curr = 0
+        curr_numel = 0
         for param_meta in model.parameters():
             materialized = None
             rank_param_intervals = []
 
             for r in range(world_size):
-                interval = get_interval_for_rank(r, curr, param_meta.numel())
+                interval = get_interval_for_rank(r, curr_numel, param_meta.numel())
 
                 if interval is None:
                     rank_param_intervals.append(None)
                     continue
 
-                # Store both start and end for this rank
-                if interval is not None:
-                    interval = (interval[0] - curr, interval[1] - curr)
-                rank_param_intervals.append(interval)
+                adj_interval = shift_slice(interval, -curr_numel)
+                rank_param_intervals.append(adj_interval)
             
                 if rank == r:
-                    data = torch.empty(interval[1] - interval[0], device=self.device)
+                    numel = get_slice_numel(adj_interval)
+                    data = torch.empty(numel, device=self.device)
                     data.uniform_(-0.05, 0.05, generator=self.generator)
                     materialized = nn.Parameter(data, requires_grad=param_meta.requires_grad)
                     
             sharded_param_state = ShardedParameterState(param_meta=param_meta, materialized=materialized, rank_intervals=rank_param_intervals)
             setattr(param_meta, "_shard_state", sharded_param_state)
-        
-            curr += param_meta.numel()
+            curr_numel += param_meta.numel()
 
     def _override_param_register(self):
         self.original_register = nn.Module.register_parameter
