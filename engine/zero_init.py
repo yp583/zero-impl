@@ -111,6 +111,7 @@ class ZeroEngine:
 
         nn.Module.register_parameter = meta_register
     
+    # Currently only works for vector based optimizers
     def _override_optimizer_init(self):
         self.original_optimizer_subclass_init = torch.optim.Optimizer.__init_subclass__
 
