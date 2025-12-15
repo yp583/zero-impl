@@ -1,4 +1,25 @@
+import torch
+from torch.profiler import profile, schedule, ProfilerActivity
+from typing import Optional
+from dataclasses import dataclass, field
+import matplotlib.pyplot as plt
+import os
 
+from engine.utils.distributed import rank_print
+
+
+@dataclass
+class MemorySnapshot:
+    name: str
+    cpu_memory: int
+    self_cpu_memory: int
+    call_count: int
+
+
+@dataclass
+class MemoryProfilerResult:
+    snapshots: list = field(default_factory=list)
+    total_cpu_time: str = ""
 
 class MemoryProfiler:
     def __init__(
@@ -132,25 +153,4 @@ class MemoryProfiler:
         else:
             plt.show()
 
-        plt.close()import torch
-from torch.profiler import profile, schedule, ProfilerActivity
-from typing import Optional
-from dataclasses import dataclass, field
-import matplotlib.pyplot as plt
-import os
-
-from engine.utils.distributed import rank_print
-
-
-@dataclass
-class MemorySnapshot:
-    name: str
-    cpu_memory: int
-    self_cpu_memory: int
-    call_count: int
-
-
-@dataclass
-class MemoryProfilerResult:
-    snapshots: list = field(default_factory=list)
-    total_cpu_time: str = ""
+        plt.close()
