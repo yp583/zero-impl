@@ -13,5 +13,5 @@ wheels/
 .env
 .envrc
 
-test/graphs
+graphs
 FINDINGS.md

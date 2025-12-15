@@ -33,10 +33,13 @@ class ZeroEngineConfig:
     generator: torch.Generator
     device: str
 
+    prefetch_aggressiveness: int = 1
+
 class ZeroEngine:
     def __init__(self, config: ZeroEngineConfig):
         self.generator = config.generator
         self.device = config.device
+        self.prefetch_aggressiveness = config.prefetch_aggressiveness
 
         self.original_register = None
         self.original_optimizer_subclass_init = None

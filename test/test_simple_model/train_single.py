@@ -1,6 +1,13 @@
+import torch
+from contextlib import ExitStack
+from datasets.dev.dev_dataclient import DevDatasetClient
+from test.model import TestModel
+from engine.profilers import MemoryProfiler, LossProfiler, IterationProfiler
+from dotenv import load_dotenv
+import os
 
-if __name__ == "__main__":
-    single_train()
+load_dotenv()
+
 
 def single_train():
     print("Single process training started!")
@@ -17,6 +24,7 @@ def single_train():
     with ExitStack() as stack:
         mem_profiler = stack.enter_context(MemoryProfiler(graph_folder=graph_dir, profile_name="memory_single"))
         loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path))
+        iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name="iteration_time_single"))
 
         model = TestModel(input_dim=128, output_dim=128)
 
@@ -50,15 +58,11 @@ def single_train():
 
                 loss_profiler.record(loss)
                 mem_profiler.step()
+                iter_profiler.step()
 
             avg_loss = epoch_loss / num_batches
             print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
-import torch
-from contextlib import ExitStack
-from datasets.dev.dev_dataclient import DevDatasetClient
-from test.model import TestModel
-from engine.profilers import MemoryProfiler, LossProfiler
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
+
+if __name__ == "__main__":
+    single_train()

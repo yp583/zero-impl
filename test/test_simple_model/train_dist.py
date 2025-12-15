@@ -4,7 +4,7 @@ from contextlib import ExitStack
 from datasets.dev.dev_dataclient import DevDatasetClient
 from test.model import TestModel
 from engine.zero_init import ZeroEngine, ZeroEngineConfig
-from engine.profilers import MemoryProfiler, LossProfiler
+from engine.profilers import MemoryProfiler, LossProfiler, IterationProfiler
 from engine.utils import rank0_print
 from dotenv import load_dotenv
 import os
@@ -40,6 +40,7 @@ def dist_train():
         mem_profiler = stack.enter_context(MemoryProfiler(graph_folder=graph_dir, profile_name=f"memory_dist_rank_{rank}"))
         ze = stack.enter_context(ZeroEngine(config=zero_config))
         loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path))
+        iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name=f"iteration_time_rank_{rank}"))
 
         model = TestModel(input_dim=128, output_dim=128)
         ze.register_model(model)
@@ -51,7 +52,7 @@ def dist_train():
 
         loss_fn = torch.nn.CrossEntropyLoss()
         num_epochs = 100
-        batch_size = 32
+        batch_size = 8
 
         for epoch in range(num_epochs):
             epoch_loss = 0.0
@@ -74,6 +75,7 @@ def dist_train():
 
                 loss_profiler.record(loss)
                 mem_profiler.step()
+                iter_profiler.step()
 
             avg_loss = epoch_loss / num_batches
             rank0_print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
