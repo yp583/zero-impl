@@ -1,7 +1,8 @@
 from collections import deque
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from functools import partial
 from typing import Iterator
+import math
 import torch
 import torch.nn as nn
 from engine.communication import (
@@ -47,10 +48,8 @@ class ZeroEngine:
         
     
     def _assign_hooks(self, model):
-        forward_gather = partial(gather_params_for_module, device=self.device, backwards=False)
-        backward_gather = partial(gather_params_for_module, device=self.device, backwards=True)
-        forward_discard = partial(discard_params_for_module, device=self.device, backwards=False)
-        backward_discard = partial(discard_params_for_module, device=self.device, backwards=True)
+        forward_gather = partial(gather_params_for_module, device=self.device)
+        forward_discard = partial(discard_params_for_module)
 
         leaf_modules = deque([model])
         while len(leaf_modules) > 0:
@@ -61,10 +60,8 @@ class ZeroEngine:
 
             f_pre_hook = module.register_forward_pre_hook(forward_gather)
             f_post_hook = module.register_forward_hook(forward_discard)
-            b_pre_hook = module.register_full_backward_pre_hook(backward_gather)
-            b_post_hook = module.register_full_backward_hook(backward_discard)
 
-            self.hooks.extend([f_pre_hook, f_post_hook, b_pre_hook, b_post_hook])
+            self.hooks.extend([f_pre_hook, f_post_hook])
 
     def _materialize_sharded_params(self, model: nn.Module):
         total_numel = sum([param.numel() for param in model.parameters()])
@@ -105,8 +102,11 @@ class ZeroEngine:
             
                 if rank == r:
                     numel = get_slice_numel(adj_interval)
+                    fan_in = _calculate_fan_in(tuple(param_meta.shape))
+                    gain = nn.init.calculate_gain("relu")
+                    bound = math.sqrt(3.0) * gain / math.sqrt(fan_in)
                     data = torch.empty(numel, device=self.device)
-                    data.uniform_(-0.05, 0.05, generator=self.generator)
+                    data.uniform_(-bound, bound, generator=self.generator)
                     materialized = nn.Parameter(data, requires_grad=param_meta.requires_grad)
                     
             sharded_param_state = ShardedParameterState(param_meta=param_meta, materialized=materialized, rank_intervals=rank_param_intervals)

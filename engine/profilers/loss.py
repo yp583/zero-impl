@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import os
 from dataclasses import dataclass, field
 
+from engine.utils.distributed import rank_print
+
 @dataclass
 class LossSnapshot:
     step: int
@@ -21,7 +23,7 @@ class LossProfiler:
 
     def graph(self):
         if not self.snapshots:
-            print("No loss snapshots recorded")
+            rank_print("No loss snapshots recorded")
             return
 
         steps = [s.step for s in self.snapshots]
@@ -38,7 +40,7 @@ class LossProfiler:
         if self.graph_path:
             os.makedirs(os.path.dirname(self.graph_path), exist_ok=True)
             plt.savefig(self.graph_path)
-            print(f"Loss graph saved to {self.graph_path}")
+            rank_print(f"Loss graph saved to {self.graph_path}")
         else:
             plt.show()
 

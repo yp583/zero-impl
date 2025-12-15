@@ -68,7 +68,6 @@ class ShardedParameterState:
             
         for rank in range(world_size):
             if len(tensor_list[rank]) > 0:
-                rank_print(f"[ShardedParam] flat grad chunk shapes: {[t.shape for t in tensor_list[rank]]}")
                 tensor_list[rank] = torch.cat(tensor_list[rank])
             else:
                 tensor_list[rank] = torch.empty(0)

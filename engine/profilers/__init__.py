@@ -1,2 +1,2 @@
-from engine.profilers.meta_param import MetaParamCounter
+from engine.profilers.mem_profiler import MemoryProfiler
 from engine.profilers.loss import LossProfiler
