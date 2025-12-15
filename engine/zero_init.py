@@ -17,6 +17,16 @@ import warnings
 from engine.utils.math import get_slice_numel, shift_slice
 warnings.filterwarnings("ignore", message="Full backward hook")
 
+
+def _calculate_fan_in(shape: tuple) -> int:
+    if len(shape) < 2:
+        return shape[0]
+    receptive_field_size = 1
+    for dim in shape[2:]:
+        receptive_field_size *= dim
+    return shape[1] * receptive_field_size
+
+
 @dataclass
 class ZeroEngineConfig:
     generator: torch.Generator
