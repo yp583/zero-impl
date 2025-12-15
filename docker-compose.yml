@@ -22,3 +22,16 @@ services:
       - ./engine:/app/engine
       - ./datasets:/app/datasets
       - ./test:/app/test
+
+  trainer-single:
+    build:
+      context: .
+      dockerfile: test/Dockerfile
+    depends_on:
+      - datahost
+    env_file: .env
+    command: uv run python test/train_single.py
+    volumes:
+      - ./engine:/app/engine
+      - ./datasets:/app/datasets
+      - ./test:/app/test
