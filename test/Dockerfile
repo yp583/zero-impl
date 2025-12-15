@@ -27,4 +27,4 @@ CMD uv run torchrun \
     --master-port=${MASTER_PORT} \
     --nnodes=1 \
     --nproc-per-node=${WORLD_SIZE} \
-    test/train.py
+    test/train_dist.py
