@@ -45,7 +45,7 @@ if __name__ == "__main__":
     port = int(os.environ["DATASET_HOST_PORT"])
 
     # Create dataset and host
-    rnd_ds = MyRandomDataset(in_dim=128, out_dim=128, num_samples=100)
+    rnd_ds = MyRandomDataset(in_dim=128, out_dim=128, num_samples=1000)
     ds_host = DevDatasetHost(rnd_ds, world_size)
 
     print(f"Starting dataset host on 0.0.0.0:{port} for world_size={world_size}")
