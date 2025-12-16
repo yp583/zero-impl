@@ -54,6 +54,34 @@ class ShardedParameterState:
         return flat_data
     
     @staticmethod
+    def from_flat_params(shards: list['ShardedParameterState'], tensor_list: list[torch.Tensor]) -> list[torch.Tensor]:
+        world_size = dist.get_world_size()
+        all_param_data = []
+        rank_offsets = [0 for _ in range(world_size)]
+
+        for shard in shards:
+            param_data = []
+            for rank in range(world_size):
+                interval = shard.rank_intervals[rank]
+                if interval is None:
+                    continue
+                
+                numel = get_slice_numel(interval)
+                if numel <= 0:
+                    continue
+
+                prev_offset = rank_offsets[rank]
+                rank_param_data = tensor_list[rank][prev_offset:prev_offset+numel]
+                param_data.append(rank_param_data)
+                rank_offsets[rank] += numel
+            
+            all_param_data.append(torch.cat(param_data))
+
+        return all_param_data
+
+                
+
+    @staticmethod
     def to_flat_grads(shards: list['ShardedParameterState']) -> list[torch.Tensor]:
         world_size = dist.get_world_size()
         
@@ -88,7 +116,9 @@ def _set_module_param(module: nn.Module, name: str, new_param: nn.Parameter):
     target = module
     for part in parts[:-1]:
         target = getattr(target, part)
+    old_param = target._parameters[parts[-1]]
     target._parameters[parts[-1]] = new_param
+    del old_param
 
 
 def set_param_meta(module: nn.Module, name: str, param: nn.Parameter):
