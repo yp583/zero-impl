@@ -34,8 +34,8 @@ def single_train():
         labels = torch.tensor([dp[1] for dp in data], dtype=torch.long, device=device)
 
         loss_fn = torch.nn.CrossEntropyLoss()
-        num_epochs = 100
-        batch_size = 32
+        num_epochs = int(os.getenv("NUM_EPOCHS", 100))
+        batch_size = int(os.getenv("BATCH_SIZE", 32))
 
         for epoch in range(num_epochs):
             epoch_loss = 0.0
