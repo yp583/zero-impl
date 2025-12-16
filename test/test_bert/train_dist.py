@@ -1,32 +1,21 @@
-import torch
-import torch.distributed as dist
-from contextlib import ExitStack
-from data_sources.dev.dev_dataclient import DevDatasetClient
-from test.test_simple_model.model import TestModel
-from engine.zero_init import ZeroEngine, ZeroEngineConfig
-from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
-from engine.utils import rank0_print
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
 
-def finalize_dist():
-    dist.barrier()
-    dist.destroy_process_group()
+if __name__ == "__main__":
+    dist_train()
+
 
 def dist_train():
     dist.init_process_group(backend=os.getenv("TORCH_BACKEND"))
     rank = dist.get_rank()
     world_size = dist.get_world_size()
 
-    print(f"[Rank {rank + 1}/{world_size}] Process initialized successfully!")
+    print(f"[Rank {rank + 1}/{world_size}] BERT process initialized successfully!")
 
-    ds_client = DevDatasetClient(rank=rank, world_size=world_size)
+    ds_client = BertDatasetClient(rank=rank, world_size=world_size)
     data = ds_client.get_shard()
 
     device = "cpu"
-    generator = torch.Generator(device=device).manual_seed(42)
+    generator = torch.Generator(device=device).manual_seed(42 + rank)
 
     zero_config = ZeroEngineConfig(
         generator=generator,
@@ -42,28 +31,36 @@ def dist_train():
         loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path))
         iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name=f"iteration_time_rank_{rank}"))
 
-        model = TestModel(input_dim=128, output_dim=128)
+        model = create_bert_model()
         ze.register_model(model)
 
-        optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
-        inputs = torch.stack([torch.tensor(dp[0], dtype=torch.float32, device=device) for dp in data])
-        labels = torch.tensor([dp[1] for dp in data], dtype=torch.long, device=device)
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
-        loss_fn = torch.nn.CrossEntropyLoss()
+        input_ids = torch.tensor([dp[0] for dp in data], dtype=torch.long, device=device)
+        attention_mask = torch.tensor([dp[1] for dp in data], dtype=torch.long, device=device)
+        labels = torch.tensor([dp[2] for dp in data], dtype=torch.long, device=device)
+
         num_epochs = int(os.getenv("NUM_EPOCHS", 100))
         batch_size = int(os.getenv("BATCH_SIZE", 32))
+
 
         for epoch in range(num_epochs):
             epoch_loss = 0.0
             num_batches = 0
 
-            for i in range(0, len(inputs), batch_size):
-                batch_inputs = inputs[i:i + batch_size]
+            for i in range(0, len(input_ids), batch_size):
+
+                batch_input_ids = input_ids[i:i + batch_size]
+                batch_attention_mask = attention_mask[i:i + batch_size]
                 batch_labels = labels[i:i + batch_size]
 
-                out = model.forward(batch_inputs)
-                loss = loss_fn(out, batch_labels)
+                outputs = model(
+                    input_ids=batch_input_ids,
+                    attention_mask=batch_attention_mask,
+                    labels=batch_labels,
+                )
+                loss = outputs.loss
 
                 loss.backward()
 
@@ -81,6 +78,20 @@ def dist_train():
             rank0_print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
 
     finalize_dist()
+import torch
+import torch.distributed as dist
+from contextlib import ExitStack
+from data_sources.bert.bert_dataclient import BertDatasetClient
+from test.test_bert.model import create_bert_model
+from engine.zero_init import ZeroEngine, ZeroEngineConfig
+from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
+from engine.utils import rank0_print
+from dotenv import load_dotenv
+import os
 
-if __name__ == "__main__":
-    dist_train()
+load_dotenv()
+
+
+def finalize_dist():
+    dist.barrier()
+    dist.destroy_process_group()

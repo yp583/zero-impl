@@ -22,6 +22,103 @@ class MemoryProfilerResult:
     snapshots: list = field(default_factory=list)
     total_cpu_time: str = ""
 
+
+@dataclass
+class PeakMemorySnapshot:
+    step: int
+    current_mb: float
+
+
+class PeakMemoryProfiler:
+    """Tracks peak memory usage over training iterations.
+
+    Uses torch.cuda memory tracking for GPU, falls back to tracemalloc for CPU.
+    """
+
+    def __init__(
+        self,
+        graph_folder: Optional[str] = None,
+        profile_name: str = "peak_memory",
+        device: str = "cpu",
+    ):
+        self.graph_folder = graph_folder
+        self.profile_name = profile_name
+        self.snapshots: list[PeakMemorySnapshot] = []
+        self.step_count = 0
+        self.device = device
+        self.use_cuda = device != "cpu" and torch.cuda.is_available()
+
+    def __enter__(self):
+        if self.use_cuda:
+            torch.cuda.reset_peak_memory_stats()
+            torch.cuda.empty_cache()
+        else:
+            tracemalloc.start()
+        return self
+
+    def step(self):
+        if self.use_cuda:
+            current = torch.cuda.memory_allocated() / (1024 * 1024)
+            peak = torch.cuda.max_memory_allocated() / (1024 * 1024)
+        else:
+            current, peak = tracemalloc.get_traced_memory()
+            current = current / (1024 * 1024)
+            peak = peak / (1024 * 1024)
+
+        self.snapshots.append(PeakMemorySnapshot(
+            step=self.step_count,
+            current_mb=current,
+            peak_mb=peak,
+        ))
+        self.step_count += 1
+
+    def __exit__(self, *args, **kwargs):
+        if not self.use_cuda:
+            tracemalloc.stop()
+        self._print_summary()
+        self._graph()
+
+    def _print_summary(self):
+        if not self.snapshots:
+            return
+        max_peak = max(s.peak_mb for s in self.snapshots)
+        avg_current = sum(s.current_mb for s in self.snapshots) / len(self.snapshots)
+        rank_print(f"[PeakMemoryProfiler] Peak: {max_peak:.2f} MB, Avg Current: {avg_current:.2f} MB")
+
+    def _graph(self):
+        if not self.snapshots:
+            return
+
+        if self.graph_folder:
+            os.makedirs(self.graph_folder, exist_ok=True)
+
+        plt.figure(figsize=(12, 5))
+
+        steps = [s.step for s in self.snapshots]
+        current = [s.current_mb for s in self.snapshots]
+        peak = [s.peak_mb for s in self.snapshots]
+
+        plt.plot(steps, current, label='Current Memory (MB)', color='steelblue', linewidth=1.5)
+        plt.plot(steps, peak, label='Peak Memory (MB)', color='darkorange', linewidth=1.5, linestyle='--')
+
+        plt.xlabel('Step')
+        plt.ylabel('Memory (MB)')
+        plt.title(f'{self.profile_name}: Memory Over Time')
+        plt.legend()
+        plt.grid(True, alpha=0.3)
+        plt.tight_layout()
+
+        if self.graph_folder:
+            path = os.path.join(self.graph_folder, f"{self.profile_name}.png")
+            plt.savefig(path, dpi=150)
+            rank_print(f"Peak memory graph saved to {path}")
+        else:
+            plt.show()
+
+        plt.close()
+    peak_mb: float
+
+
 class MemoryProfiler:
     def __init__(
         self,

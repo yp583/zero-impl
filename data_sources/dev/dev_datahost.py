@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import uvicorn
 import os
 
-from datasets.random import MyRandomDataset
+from data_sources.random import MyRandomDataset
 
 
 class ShardRequest(BaseModel):

@@ -12,7 +12,7 @@ COPY pyproject.toml uv.lock* ./
 # Copy files needed for package build
 COPY README.md ./
 COPY engine/ ./engine/
-COPY datasets/ ./datasets/
+COPY data_sources/ ./data_sources/
 
 # Install dependencies (non-editable to avoid write permission issues)
 RUN uv sync --frozen --no-editable
@@ -21,4 +21,4 @@ RUN uv sync --frozen --no-editable
 ENV PYTHONPATH=/app
 
 # Run the dataset host
-CMD ["uv", "run", "python", "-m", "datasets.dev.dev_datahost"]
+CMD ["uv", "run", "python", "-m", "data_sources.dev.dev_datahost"]

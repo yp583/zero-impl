@@ -2,36 +2,102 @@ services:
   datahost:
     build:
       context: .
-      dockerfile: datasets/dev/Dockerfile
+      dockerfile: data_sources/dev/Dockerfile
     ports:
       - "7777:7777"
     env_file: .env
     volumes:
       - ./engine:/app/engine
-      - ./datasets:/app/datasets
+      - ./data_sources:/app/data_sources
+    profiles: [simple]
 
-  trainer:
+  simple-trainer:
     build:
       context: .
-      dockerfile: test/Dockerfile
+      dockerfile: test/test_simple_model/Dockerfile
     depends_on:
       - datahost
     env_file: .env
+    environment:
+      - NUM_EPOCHS=100
+      - BATCH_SIZE=32
+      - MASTER_ADDR=simple-trainer
     shm_size: 2gb
     volumes:
       - ./engine:/app/engine
-      - ./datasets:/app/datasets
+      - ./data_sources:/app/data_sources
       - ./test:/app/test
+    profiles: [simple]
 
-  trainer-single:
+  simple-trainer-single:
     build:
       context: .
-      dockerfile: test/Dockerfile
+      dockerfile: test/test_simple_model/Dockerfile
     depends_on:
       - datahost
     env_file: .env
-    command: uv run python test/train_single.py
+    environment:
+      - NUM_EPOCHS=100
+      - BATCH_SIZE=32
+    command: uv run python test/test_simple_model/train_single.py
     volumes:
       - ./engine:/app/engine
-      - ./datasets:/app/datasets
+      - ./data_sources:/app/data_sources
       - ./test:/app/test
+    profiles: [simple]
+
+  bert-datahost:
+    build:
+      context: .
+      dockerfile: data_sources/bert/Dockerfile
+    ports:
+      - "7778:7778"
+    env_file: .env
+    volumes:
+      - ./data_sources:/app/data_sources
+    profiles: [bert]
+
+  bert-trainer:
+    build:
+      context: .
+      dockerfile: test/test_bert/Dockerfile
+    depends_on:
+      - bert-datahost
+    env_file: .env
+    environment:
+      - BERT_DATASET_HOST_URL=http://bert-datahost:7778
+      - NUM_EPOCHS=100
+      - BATCH_SIZE=32
+      - MASTER_ADDR=bert-trainer
+    shm_size: 4gb
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+    volumes:
+      - ./engine:/app/engine
+      - ./data_sources:/app/data_sources
+      - ./test:/app/test
+    profiles: [bert]
+
+  bert-trainer-single:
+    build:
+      context: .
+      dockerfile: test/test_bert/Dockerfile
+    depends_on:
+      - bert-datahost
+    env_file: .env
+    environment:
+      - BERT_DATASET_HOST_URL=http://bert-datahost:7778
+      - NUM_EPOCHS=10
+      - BATCH_SIZE=8
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+    command: uv run python test/test_bert/train_single.py
+    volumes:
+      - ./engine:/app/engine
+      - ./data_sources:/app/data_sources
+      - ./test:/app/test
+    profiles: [bert]
