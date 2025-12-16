@@ -1,8 +1,12 @@
+import torch
+from contextlib import ExitStack
+from data_sources.bert.bert_dataclient import BertDatasetClient
+from test.test_bert.model import create_bert_model
+from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
+from dotenv import load_dotenv
+import os
 
-
-if __name__ == "__main__":
-    single_train()
-
+load_dotenv()
 
 def single_train():
     print("BERT single process training started!")
@@ -62,12 +66,6 @@ def single_train():
 
             avg_loss = epoch_loss / num_batches
             print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
-import torch
-from contextlib import ExitStack
-from data_sources.bert.bert_dataclient import BertDatasetClient
-from test.test_bert.model import create_bert_model
-from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
+if __name__ == "__main__":
+    single_train()

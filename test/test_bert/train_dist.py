@@ -1,7 +1,20 @@
+import torch
+import torch.distributed as dist
+from contextlib import ExitStack
+from data_sources.bert.bert_dataclient import BertDatasetClient
+from test.test_bert.model import create_bert_model
+from engine.zero_init import ZeroEngine, ZeroEngineConfig
+from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
+from engine.utils import rank0_print
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
-if __name__ == "__main__":
-    dist_train()
+def finalize_dist():
+    dist.barrier()
+    dist.destroy_process_group()
 
 
 def dist_train():
@@ -78,20 +91,6 @@ def dist_train():
             rank0_print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
 
     finalize_dist()
-import torch
-import torch.distributed as dist
-from contextlib import ExitStack
-from data_sources.bert.bert_dataclient import BertDatasetClient
-from test.test_bert.model import create_bert_model
-from engine.zero_init import ZeroEngine, ZeroEngineConfig
-from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
-from engine.utils import rank0_print
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
-
-
-def finalize_dist():
-    dist.barrier()
-    dist.destroy_process_group()
+if __name__ == "__main__":
+    dist_train()

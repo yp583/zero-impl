@@ -15,3 +15,4 @@ wheels/
 
 graphs
 FINDINGS.md
+*.test
