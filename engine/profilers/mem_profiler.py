@@ -3,6 +3,7 @@ from torch.profiler import profile, schedule, ProfilerActivity
 from typing import Optional
 from dataclasses import dataclass, field
 import matplotlib.pyplot as plt
+import tracemalloc
 import os
 
 from engine.utils.distributed import rank_print
