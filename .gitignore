@@ -16,3 +16,4 @@ wheels/
 graphs
 FINDINGS.md
 *.test
+*.DS_Store
