@@ -51,7 +51,7 @@ class _UnpadWorkScatter:
     def __getattr__(self, name):
         return getattr(self._work, name)
 
-def all_gather_uneven(tensor_list, tensor, group=None, async_op=False):
+def all_gather_uneven(tensor_list, tensor, group=None, async_op=False) -> dist.Work:
     rank = dist.get_rank(group)
     backend = dist.get_backend(group)
     supports_uneven = UNEVEN_COMMS.get(backend, False)
@@ -79,7 +79,7 @@ def all_gather_uneven(tensor_list, tensor, group=None, async_op=False):
     else:
         return dist.all_gather(tensor_list, tensor, group=group, async_op=async_op)
 
-def reduce_scatter_uneven(output_tensor: torch.Tensor, input_tensors: list[torch.Tensor], op: dist.ReduceOp = dist.ReduceOp.SUM, group=None, async_op=False):
+def reduce_scatter_uneven(output_tensor: torch.Tensor, input_tensors: list[torch.Tensor], op = dist.ReduceOp.SUM, group=None, async_op=False) -> dist.Work:
     rank = dist.get_rank(group)
     world_size = dist.get_world_size(group)
     backend = dist.get_backend(group)
