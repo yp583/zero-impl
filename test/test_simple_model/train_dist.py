@@ -2,9 +2,10 @@ import torch
 import torch.distributed as dist
 from contextlib import ExitStack
 from data_sources.dev.dev_dataclient import DevDatasetClient
+from engine.utils.distributed import rank_print
 from test.test_simple_model.model import TestModel
 from engine.zero_init import ZeroEngine, ZeroEngineConfig
-from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
+from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler, TensorLifecycleProfiler
 from engine.utils import rank0_print
 from dotenv import load_dotenv
 import os
@@ -20,7 +21,7 @@ def dist_train():
     rank = dist.get_rank()
     world_size = dist.get_world_size()
 
-    print(f"[Rank {rank + 1}/{world_size}] Process initialized successfully!")
+    rank_print(f"Process initialized successfully!")
 
     ds_client = DevDatasetClient(rank=rank, world_size=world_size)
     data = ds_client.get_shard()
@@ -37,12 +38,13 @@ def dist_train():
     loss_graph_path = os.path.join(graph_dir, f"loss_dist_rank_{rank}.png")
 
     with ExitStack() as stack:
-        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(graph_folder=graph_dir, profile_name=f"peak_memory_dist_rank_{rank}", device=device))
+        tensor_profiler = stack.enter_context(TensorLifecycleProfiler(log_folder=graph_dir, log_ranks=[0]))
+        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(graph_folder=graph_dir, profile_name=f"peak_memory_dist_rank_{rank}", device=device, log_ranks=[0]))
         ze = stack.enter_context(ZeroEngine(config=zero_config))
-        loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path))
-        iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name=f"iteration_time_rank_{rank}"))
+        loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path, log_ranks=[0]))
+        iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name=f"iteration_time_rank_{rank}", log_ranks=[0]))
 
-        model = TestModel(input_dim=128, output_dim=128)
+        model = TestModel(input_dim=128, hidden_dim=64, output_dim=128)
         ze.register_model(model)
 
         optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)

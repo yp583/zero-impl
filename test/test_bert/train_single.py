@@ -45,7 +45,7 @@ def single_train():
                 batch_attention_mask = attention_mask[i:i + batch_size]
                 batch_labels = labels[i:i + batch_size]
 
-                outputs = model(
+                outputs = model.forward(
                     input_ids=batch_input_ids,
                     attention_mask=batch_attention_mask,
                     labels=batch_labels,

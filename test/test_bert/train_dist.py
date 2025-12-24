@@ -1,10 +1,12 @@
 import torch
 import torch.distributed as dist
 from contextlib import ExitStack
+
+from transformers.modeling_outputs import SequenceClassifierOutput
 from data_sources.bert.bert_dataclient import BertDatasetClient
 from test.test_bert.model import create_bert_model
 from engine.zero_init import ZeroEngine, ZeroEngineConfig
-from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
+from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler, TensorLifecycleProfiler
 from engine.utils import rank0_print
 from dotenv import load_dotenv
 import os
@@ -39,10 +41,11 @@ def dist_train():
     loss_graph_path = os.path.join(graph_dir, f"loss_dist_rank_{rank}.png")
 
     with ExitStack() as stack:
-        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(graph_folder=graph_dir, profile_name=f"peak_memory_dist_rank_{rank}", device=device))
+        tensor_profiler = stack.enter_context(TensorLifecycleProfiler(graph_folder=graph_dir, profile_name="tensor_lifecycle", log_ranks=[0]))
+        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(graph_folder=graph_dir, profile_name=f"peak_memory_dist_rank_{rank}", device=device, log_ranks=[0]))
         ze = stack.enter_context(ZeroEngine(config=zero_config))
-        loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path))
-        iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name=f"iteration_time_rank_{rank}"))
+        loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path, log_ranks=[0]))
+        iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name=f"iteration_time_rank_{rank}", log_ranks=[0]))
 
         model = create_bert_model()
         ze.register_model(model)
@@ -68,11 +71,13 @@ def dist_train():
                 batch_attention_mask = attention_mask[i:i + batch_size]
                 batch_labels = labels[i:i + batch_size]
 
-                outputs = model(
+                outputs = model.forward(
                     input_ids=batch_input_ids,
                     attention_mask=batch_attention_mask,
                     labels=batch_labels,
                 )
+                assert(isinstance(outputs, SequenceClassifierOutput))
+                assert(isinstance(outputs.loss, torch.Tensor))
                 loss = outputs.loss
 
                 loss.backward()
@@ -86,6 +91,7 @@ def dist_train():
                 loss_profiler.record(loss)
                 peak_mem_profiler.step()
                 iter_profiler.step()
+                tensor_profiler.step()
 
             avg_loss = epoch_loss / num_batches
             rank0_print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
