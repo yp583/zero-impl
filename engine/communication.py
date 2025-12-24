@@ -1,10 +1,11 @@
 from ast import List
 from functools import partial
-from typing import Callable
+from typing import Callable, Sequence
 
 import torch
 import torch.nn as nn
 import torch.distributed as dist
+from torch.profiler import record_function
 from torch.utils.hooks import RemovableHandle
 
 from engine.utils import all_gather_uneven, reduce_scatter_uneven
@@ -13,12 +14,18 @@ from engine.sharded_param import (
     set_param_meta,
     set_param_materialized,
 )
+from engine.utils.distributed import rank0_print
+from engine.profilers import TensorLifecycleProfiler
 
-def remove_after_called(func: Callable, handle_ref: list[RemovableHandle]) -> Callable:
-    def wrapper(*args, **kwargs):
+def remove_after_called(
+        func: Callable[[Sequence[torch.Tensor | None]], None],
+        handle_ref: list[RemovableHandle]
+    ) -> Callable[[Sequence[torch.Tensor | None]], None]:
+
+    def wrapper(data: Sequence[torch.Tensor | None]) -> None:
         nonlocal handle_ref
         try:
-            func(*args, **kwargs)
+            func(data)
         finally:
             for ref in handle_ref:
                 ref.remove()
