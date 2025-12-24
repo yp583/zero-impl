@@ -1,4 +1,5 @@
 from collections import deque
+from curses import initscr
 from dataclasses import dataclass
 from functools import partial
 from typing import Iterator
@@ -8,18 +9,21 @@ import torch.nn as nn
 from engine.communication import (
     gather_params_for_module,
     discard_params_for_module,
+    discard_grads_for_module
 )
-from engine.sharded_param import ShardedParameterState
+from engine.profilers.mem_profiler import PeakMemoryProfiler
+from engine.sharded_param import ShardedParameterState, _set_module_param
 import torch.distributed as dist
 
 from engine.utils import has_direct_params, overlap, rank0_print
 import warnings
 
+from engine.utils.distributed import rank_print
 from engine.utils.math import get_slice_numel, shift_slice
 warnings.filterwarnings("ignore", message="Full backward hook")
 
 
-def _calculate_fan_in(shape: tuple) -> int:
+def _calculate_fan_in(shape: tuple[int, int] | tuple[int]) -> int:
     if len(shape) < 2:
         return shape[0]
     receptive_field_size = 1
@@ -34,12 +38,18 @@ class ZeroEngineConfig:
     device: str
 
     prefetch_aggressiveness: int = 1
+    
+    debug: bool = False
+    profiler: PeakMemoryProfiler | None = None
 
 class ZeroEngine:
     def __init__(self, config: ZeroEngineConfig):
         self.generator = config.generator
         self.device = config.device
         self.prefetch_aggressiveness = config.prefetch_aggressiveness
+
+        self.debug = config.debug
+        self.profiler = config.profiler
 
         self.original_register = None
         self.original_optimizer_subclass_init = None
@@ -49,10 +59,10 @@ class ZeroEngine:
         self._assign_hooks(model)
         self._materialize_sharded_params(model)
         
-    
     def _assign_hooks(self, model):
         forward_gather = partial(gather_params_for_module, device=self.device)
         forward_discard = partial(discard_params_for_module)
+        backward_discard = partial(discard_grads_for_module)
 
         leaf_modules = deque([model])
         while len(leaf_modules) > 0:
@@ -63,9 +73,12 @@ class ZeroEngine:
 
             f_pre_hook = module.register_forward_pre_hook(forward_gather)
             f_post_hook = module.register_forward_hook(forward_discard)
+            b_post_hook = module.register_full_backward_hook(backward_discard)
 
-            self.hooks.extend([f_pre_hook, f_post_hook])
 
+            self.hooks.extend([f_pre_hook, f_post_hook, b_post_hook])
+
+    @torch.no_grad()
     def _materialize_sharded_params(self, model: nn.Module):
         total_numel = sum([param.numel() for param in model.parameters()])
         rank = dist.get_rank()
@@ -78,9 +91,9 @@ class ZeroEngine:
         else:
             rank_offsets.append(curr_offset)
 
-        def get_interval_for_rank(rank: int, curr_offset: int, param_numel: int) -> slice:
-            rank_model_interval = (rank_offsets[rank], rank_offsets[rank + 1])
-            curr_param_interval = (curr_offset, curr_offset + param_numel)
+        def get_interval_for_rank(rank: int, curr_offset: int, param_numel: int) -> slice | None:
+            rank_model_interval: tuple[int, int] = (rank_offsets[rank], rank_offsets[rank + 1])
+            curr_param_interval: tuple[int, int] = (curr_offset, curr_offset + param_numel)
             overlap_interval = overlap(rank_model_interval, curr_param_interval)
 
             if overlap_interval is None:
@@ -89,9 +102,12 @@ class ZeroEngine:
             return slice(overlap_interval[0], overlap_interval[1])
 
         curr_numel = 0
-        for param_meta in model.parameters():
+        rank_numels_materialized = [0 for i in range(world_size)]
+        for name, param in list(model.named_parameters()):
             materialized = None
             rank_param_intervals = []
+            flat_param = param.flatten()
+            param_meta = nn.Parameter(torch.empty_like(param, device='meta'))
 
             for r in range(world_size):
                 interval = get_interval_for_rank(r, curr_numel, param_meta.numel())
@@ -103,40 +119,54 @@ class ZeroEngine:
                 adj_interval = shift_slice(interval, -curr_numel)
                 rank_param_intervals.append(adj_interval)
             
+                numel = get_slice_numel(adj_interval)
+                rank_numels_materialized[r] += numel
                 if rank == r:
-                    numel = get_slice_numel(adj_interval)
-                    fan_in = _calculate_fan_in(tuple(param_meta.shape))
-                    gain = nn.init.calculate_gain("relu")
-                    bound = math.sqrt(3.0) * gain / math.sqrt(fan_in)
-                    data = torch.empty(numel, device=self.device)
-                    data.uniform_(-bound, bound, generator=self.generator)
-                    materialized = nn.Parameter(data, requires_grad=param_meta.requires_grad)
-                    
-            sharded_param_state = ShardedParameterState(param_meta=param_meta, materialized=materialized, rank_intervals=rank_param_intervals)
+                    owned_numels = flat_param[adj_interval].clone()
+                    materialized = nn.Parameter(owned_numels, requires_grad=param.requires_grad)
+                                        
+            sharded_param_state = ShardedParameterState(
+                param_meta=param_meta, 
+                materialized=materialized,
+                rank_intervals=rank_param_intervals
+            )
             setattr(param_meta, "_shard_state", sharded_param_state)
+            _set_module_param(model, name, param_meta)
             curr_numel += param_meta.numel()
 
     def _override_param_register(self):
-        self.original_register = nn.Module.register_parameter
+        original_register = nn.Module.register_parameter
+        self.original_register = original_register
 
-        def meta_register(module_self, name, param):
+        def meta_register(module_self: nn.Module, name: str, param: nn.Parameter | None) -> None:
+
+            if self.profiler and self.debug:
+                self.profiler.step(f"Pre Param Register {module_self._get_name()}")
+                rank0_print("HERE")
+            
             if isinstance(param, nn.Parameter) and param.data.device.type != 'meta':
-                meta = nn.Parameter(torch.empty_like(param, device='meta'),
-                                    requires_grad=param.requires_grad)
-                meta._shape_dtype = (tuple(param.shape), param.dtype)
-                return self.original_register(module_self, name, meta)
-            return self.original_register(module_self, name, param)
+                meta = nn.Parameter(
+                    torch.empty_like(param, device='meta', dtype=param.dtype),
+                    requires_grad=param.requires_grad,
+                )
+                res = original_register(module_self, name, meta)
+            else:
+                res = original_register(module_self, name, param)
+
+            if self.profiler and self.debug:
+                self.profiler.step(f"Post Param Register {module_self._get_name()}")
+            return res
 
         nn.Module.register_parameter = meta_register
     
-    # Currently only works for vector based optimizers
+    # Currently only works for vector based optimizers (ie not Muon)
     def _override_optimizer_init(self):
         self.original_optimizer_subclass_init = torch.optim.Optimizer.__init_subclass__
 
         def optimizer_subclass_init(cls, **kwargs):
             orig_init = cls.__init__
 
-            def get_shard(param: nn.Parameter) -> nn.Parameter | None:
+            def get_shard(param: nn.Parameter) -> torch.Tensor | None:
                 shard_state: ShardedParameterState = getattr(param, "_shard_state", None)
                 if shard_state is None or shard_state.materialized is None:
                     return None
@@ -148,7 +178,8 @@ class ZeroEngine:
                 return orig_init(optim_self, materialized_parameters, *args, **kwargs)
             cls.__init__ = pass_only_materialized
             setattr(cls, "_orig_init", orig_init)
-            self.original_optimizer_subclass_init()
+            if self.original_optimizer_subclass_init is not None:  
+                self.original_optimizer_subclass_init()
         
         @classmethod
         def class_optimizer_subclass_init(cls, **kwargs):
@@ -158,13 +189,14 @@ class ZeroEngine:
             optimizer_subclass_init(cls)
 
     def __enter__(self):
-        self._override_param_register()
+        # self._override_param_register()
         self._override_optimizer_init()
-
         return self
 
     def __exit__(self, *args, **kwargs):
-        nn.Module.register_parameter = self.original_register
+        assert self.original_optimizer_subclass_init is not None
+        # assert self.original_register is not None
+        # nn.Module.register_parameter = self.original_register
         torch.optim.Optimizer.__init_subclass__ = self.original_optimizer_subclass_init
         for cls in torch.optim.Optimizer.__subclasses__():
             orig_init = getattr(cls, "_orig_init", None)

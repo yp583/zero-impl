@@ -1,0 +1,3022 @@
+Attaching to simple-trainer-1
+simple-trainer-1  | [Gloo] Rank 1 is connected to 3[Gloo] Rank  peer ranks. Expected number of connected peer ranks is : 30 is connected to 
+simple-trainer-1  | 3 peer ranks. Expected number of connected peer ranks is : 3
+simple-trainer-1  | [Gloo] Rank [Gloo] Rank 2 is connected to 3 peer ranks. Expected number of connected peer ranks is : 33 is connected to 3
+simple-trainer-1  |  peer ranks. Expected number of connected peer ranks is : 3
+simple-trainer-1  | [Gloo] Rank 0 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+simple-trainer-1  | [Gloo] Rank 2 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+simple-trainer-1  | [Gloo] Rank 1 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+simple-trainer-1  | [Rank 2] Process initialized successfully!
+simple-trainer-1  | [Rank 0] Process initialized successfully!
+simple-trainer-1  | [Rank 1] Process initialized successfully!
+simple-trainer-1  | [Gloo] Rank 3 is connected to 3 peer ranks. Expected number of connected peer ranks is : 3
+simple-trainer-1  | [Rank 3] Process initialized successfully!
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [Rank 1] [RANK NUMELS MATERIALIZED]  [0, 8304, 0, 0][FREE] 8192 bytes
+simple-trainer-1  | 
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | [Rank 3] [RANK NUMELS MATERIALIZED]  [0, 0, 0, 8304]
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 48 bytes (meta=False)
+simple-trainer-1  | [Rank 0] [RANK NUMELS MATERIALIZED]  [8304, 0, 0, 0]
+simple-trainer-1  | [Rank 2] [RANK NUMELS MATERIALIZED]  [0, 0, 8304, 0]
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | Epoch [1/10], Average Loss: 5.7104
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | Epoch [2/10], Average Loss: 5.0393
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | Epoch [3/10], Average Loss: 4.8290
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | Epoch [4/10], Average Loss: 4.7030
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | Epoch [5/10], Average Loss: 4.6002
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | Epoch [6/10], Average Loss: 4.4976
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | Epoch [7/10], Average Loss: 4.3889
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | Epoch [8/10], Average Loss: 4.2677
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | Epoch [9/10], Average Loss: 4.1336
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=False)
+simple-trainer-1  | discarding for MultiheadAttention
+simple-trainer-1  | [ALLOC] 12288 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 4096 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 64 bytes (meta=True)
+simple-trainer-1  | gathering for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=False)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=False)
+simple-trainer-1  | discarding for Linear
+simple-trainer-1  | [ALLOC] 8192 bytes (meta=True)
+simple-trainer-1  | [ALLOC] 128 bytes (meta=True)
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for MultiheadAttention
+simple-trainer-1  | discarding grads for MultiheadAttention
+simple-trainer-1  | discarding grads for Linear
+simple-trainer-1  | scattering for Linear
+simple-trainer-1  | [Rank 1] 
+simple-trainer-1  | ============================================================
+simple-trainer-1  | [Rank 1] Iteration Time Summary
+simple-trainer-1  | [Rank 1] ============================================================
+simple-trainer-1  | [Rank 1] Total iterations: 80
+simple-trainer-1  | [Rank 3] 
+simple-trainer-1  | ============================================================
+simple-trainer-1  | [Rank 1] Avg time: 72.04ms
+simple-trainer-1  | [Rank 3][Rank 1] Min time: 20.18ms
+simple-trainer-1  |  Iteration Time Summary[Rank 1]
+simple-trainer-1  |  Max time: 4055.98ms
+simple-trainer-1  | [Rank 1] ============================================================[Rank 3]
+simple-trainer-1  |  ============================================================
+simple-trainer-1  | Epoch [10/10], Average Loss: 3.9810[Rank 3]
+simple-trainer-1  |  Total iterations: 80
+simple-trainer-1  | [Rank 3][Rank 0] 
+simple-trainer-1  | ============================================================
+simple-trainer-1  |  Avg time: 72.04ms
+simple-trainer-1  | [Rank 0] Iteration Time Summary
+simple-trainer-1  | [Rank 0][Rank 3]  Min time: 20.23ms============================================================
+simple-trainer-1  | 
+simple-trainer-1  | [Rank 3][Rank 0]  Max time: 4055.43msTotal iterations: 80
+simple-trainer-1  | 
+simple-trainer-1  | [Rank 3] ============================================================
+simple-trainer-1  | [Rank 0] Avg time: 72.32ms
+simple-trainer-1  | [Rank 0] Min time: 20.42ms
+simple-trainer-1  | [Rank 0] Max time: 4078.03ms
+simple-trainer-1  | [Rank 0] ============================================================
+simple-trainer-1  | [Rank 2] 
+simple-trainer-1  | ============================================================
+simple-trainer-1  | [Rank 2] Iteration Time Summary
+simple-trainer-1  | [Rank 2] ============================================================
+simple-trainer-1  | [Rank 2] Total iterations: 80
+simple-trainer-1  | [Rank 2] Avg time: 72.32ms
+simple-trainer-1  | [Rank 2] Min time: 20.17ms
+simple-trainer-1  | [Rank 2] Max time: 4078.11ms
+simple-trainer-1  | [Rank 2] ============================================================
+simple-trainer-1  | [Rank 1] Iteration time graph saved to /app/test/test_simple_model/graphs/iteration_time_rank_1.png
+simple-trainer-1  | [Rank 0] Iteration time graph saved to /app/test/test_simple_model/graphs/iteration_time_rank_0.png
+simple-trainer-1  | [Rank 3] Iteration time graph saved to /app/test/test_simple_model/graphs/iteration_time_rank_3.png
+simple-trainer-1  | [Rank 2] Iteration time graph saved to /app/test/test_simple_model/graphs/iteration_time_rank_2.png
+simple-trainer-1  | [Rank 1] Loss graph saved to /app/test/test_simple_model/graphs/loss_dist_rank_1.png
+simple-trainer-1  | [Rank 0] Loss graph saved to /app/test/test_simple_model/graphs/loss_dist_rank_0.png
+simple-trainer-1  | [Rank 3] Loss graph saved to /app/test/test_simple_model/graphs/loss_dist_rank_3.png
+simple-trainer-1  | [Rank 2] Loss graph saved to /app/test/test_simple_model/graphs/loss_dist_rank_2.png
+simple-trainer-1  | [Rank 1] [PeakMemoryProfiler] Peak: 38.25 MB, Avg Current: 24.77 MB
+simple-trainer-1  | [Rank 0] [PeakMemoryProfiler] Peak: 38.24 MB, Avg Current: 24.77 MB
+simple-trainer-1  | [Rank 3] [PeakMemoryProfiler] Peak: 38.14 MB, Avg Current: 24.67 MB
+simple-trainer-1  | [Rank 2] [PeakMemoryProfiler] Peak: 38.27 MB, Avg Current: 24.76 MB
+simple-trainer-1  | [Rank 1] Peak memory graph saved to /app/test/test_simple_model/graphs/peak_memory_dist_rank_1.png
+simple-trainer-1  | [Rank 0] Peak memory graph saved to /app/test/test_simple_model/graphs/peak_memory_dist_rank_0.png
+simple-trainer-1  | [Rank 3] Peak memory graph saved to /app/test/test_simple_model/graphs/peak_memory_dist_rank_3.png
+simple-trainer-1  | [Rank 2] Peak memory graph saved to /app/test/test_simple_model/graphs/peak_memory_dist_rank_2.png
+simple-trainer-1  | [FREE] 8192 bytes[FREE] 8192 bytes[FREE] 8192 bytes
+simple-trainer-1  | 
+simple-trainer-1  | 
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 4096 bytes[FREE] 4096 bytes
+simple-trainer-1  | 
+simple-trainer-1  | [FREE] 12288 bytes[FREE] 12288 bytes
+simple-trainer-1  | 
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 64 bytes[FREE] 192 bytes[FREE] 192 bytes
+simple-trainer-1  | 
+simple-trainer-1  | 
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes[FREE] 64 bytes
+simple-trainer-1  | 
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | [FREE] 64 bytes[FREE] 128 bytes
+simple-trainer-1  | 
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 12288 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | [FREE] 8304 bytes
+simple-trainer-1  | [FREE] 8192 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 48 bytes
+simple-trainer-1  | [FREE] 192 bytes
+simple-trainer-1  | [FREE] 16 bytes
+simple-trainer-1  | [FREE] 64 bytes
+simple-trainer-1  | [FREE] 4096 bytes
+simple-trainer-1  | [FREE] 3936 bytes
+simple-trainer-1  | [FREE] 128 bytes
+simple-trainer-1  | [FREE] 8176 bytes
+[Ksimple-trainer-1 exited with code 0

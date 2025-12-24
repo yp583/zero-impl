@@ -4,9 +4,20 @@ from typing import Optional
 from dataclasses import dataclass, field
 import matplotlib.pyplot as plt
 import tracemalloc
+import subprocess
 import os
+from torch.nn.modules.module import (
+    register_module_forward_pre_hook,
+    register_module_forward_hook,
+)
 
-from engine.utils.distributed import rank_print
+from engine.profilers.base import ZeroProfiler
+
+try:
+    import memray
+    MEMRAY_AVAILABLE = True
+except ImportError:
+    MEMRAY_AVAILABLE = False
 
 
 @dataclass
@@ -27,9 +38,11 @@ class MemoryProfilerResult:
 class PeakMemorySnapshot:
     step: int
     current_mb: float
+    peak_mb: float
+    label: Optional[str] = None
 
 
-class PeakMemoryProfiler:
+class PeakMemoryProfiler(ZeroProfiler):
     """Tracks peak memory usage over training iterations.
 
     Uses torch.cuda memory tracking for GPU, falls back to tracemalloc for CPU.
@@ -40,23 +53,38 @@ class PeakMemoryProfiler:
         graph_folder: Optional[str] = None,
         profile_name: str = "peak_memory",
         device: str = "cpu",
+        hook_modules: bool = False,
+        log_ranks: Optional[list[int]] = None,
     ):
+        super().__init__(graph_folder, profile_name, log_ranks)
         self.graph_folder = graph_folder
         self.profile_name = profile_name
         self.snapshots: list[PeakMemorySnapshot] = []
         self.step_count = 0
         self.device = device
         self.use_cuda = device != "cpu" and torch.cuda.is_available()
+        self.hook_modules = hook_modules
+        self._hook_handles: list = []
 
     def __enter__(self):
+        self._register_instance()
         if self.use_cuda:
             torch.cuda.reset_peak_memory_stats()
             torch.cuda.empty_cache()
         else:
             tracemalloc.start()
+
+        if self.hook_modules:
+            self._hook_handles.append(
+                register_module_forward_pre_hook(lambda m, i: self.step())
+            )
+            self._hook_handles.append(
+                register_module_forward_hook(lambda m, i, o: self.step())
+            )
+
         return self
 
-    def step(self):
+    def step(self, label: Optional[str] = None):
         if self.use_cuda:
             current = torch.cuda.memory_allocated() / (1024 * 1024)
             peak = torch.cuda.max_memory_allocated() / (1024 * 1024)
@@ -69,24 +97,30 @@ class PeakMemoryProfiler:
             step=self.step_count,
             current_mb=current,
             peak_mb=peak,
+            label=label,
         ))
         self.step_count += 1
 
     def __exit__(self, *args, **kwargs):
+        for handle in self._hook_handles:
+            handle.remove()
+        self._hook_handles.clear()
+
         if not self.use_cuda:
             tracemalloc.stop()
         self._print_summary()
         self._graph()
+        self._unregister_instance()
 
     def _print_summary(self):
         if not self.snapshots:
             return
         max_peak = max(s.peak_mb for s in self.snapshots)
         avg_current = sum(s.current_mb for s in self.snapshots) / len(self.snapshots)
-        rank_print(f"[PeakMemoryProfiler] Peak: {max_peak:.2f} MB, Avg Current: {avg_current:.2f} MB")
+        self._log(f"[PeakMemoryProfiler] Peak: {max_peak:.2f} MB, Avg Current: {avg_current:.2f} MB")
 
     def _graph(self):
-        if not self.snapshots:
+        if not self.snapshots or not self._should_log():
             return
 
         if self.graph_folder:
@@ -101,6 +135,15 @@ class PeakMemoryProfiler:
         plt.plot(steps, current, label='Current Memory (MB)', color='steelblue', linewidth=1.5)
         plt.plot(steps, peak, label='Peak Memory (MB)', color='darkorange', linewidth=1.5, linestyle='--')
 
+        colors = ['red', 'green', 'purple', 'brown', 'pink', 'gray', 'olive', 'cyan']
+        color_idx = 0
+        for snapshot in self.snapshots:
+            if snapshot.label:
+                plt.axvline(x=snapshot.step, color=colors[color_idx % len(colors)], linestyle=':', linewidth=1.5, alpha=0.8)
+                plt.text(snapshot.step, plt.ylim()[1] * 0.95, snapshot.label, rotation=90,
+                        verticalalignment='top', fontsize=8, color=colors[color_idx % len(colors)])
+                color_idx += 1
+
         plt.xlabel('Step')
         plt.ylabel('Memory (MB)')
         plt.title(f'{self.profile_name}: Memory Over Time')
@@ -111,15 +154,14 @@ class PeakMemoryProfiler:
         if self.graph_folder:
             path = os.path.join(self.graph_folder, f"{self.profile_name}.png")
             plt.savefig(path, dpi=150)
-            rank_print(f"Peak memory graph saved to {path}")
+            self._log(f"Peak memory graph saved to {path}")
         else:
             plt.show()
 
         plt.close()
-    peak_mb: float
 
 
-class MemoryProfiler:
+class MemoryProfiler(ZeroProfiler):
     def __init__(
         self,
         graph_folder: Optional[str] = None,
@@ -129,7 +171,9 @@ class MemoryProfiler:
         wait_steps: int = 1,
         warmup_steps: int = 1,
         active_steps: int = 3,
+        log_ranks: Optional[list[int]] = None,
     ):
+        super().__init__(graph_folder, profile_name, log_ranks)
         self.graph_folder = graph_folder
         self.record_shapes = record_shapes
         self.row_limit = row_limit
@@ -141,6 +185,7 @@ class MemoryProfiler:
         self.result: Optional[MemoryProfilerResult] = None
 
     def __enter__(self):
+        self._register_instance()
         self.profiler = profile(
             activities=[ProfilerActivity.CPU],
             profile_memory=True,
@@ -167,6 +212,7 @@ class MemoryProfiler:
 
     def __exit__(self, *args, **kwargs):
         self.profiler.__exit__(*args, **kwargs)
+        self._unregister_instance()
 
     def _process_results(self):
         key_averages = self.profiler.key_averages()
@@ -197,7 +243,7 @@ class MemoryProfiler:
         return f"{bytes_val} b"
 
     def _print_table(self):
-        rank_print(
+        self._log(
             self.profiler.key_averages().table(
                 sort_by="self_cpu_memory_usage",
                 row_limit=self.row_limit
@@ -205,8 +251,10 @@ class MemoryProfiler:
         )
 
     def _graph(self):
+        if not self._should_log():
+            return
         if not self.result or not self.result.snapshots:
-            rank_print("No memory snapshots to graph")
+            self._log("No memory snapshots to graph")
             return
 
         if self.graph_folder:
@@ -247,8 +295,109 @@ class MemoryProfiler:
         if self.graph_folder:
             path = os.path.join(self.graph_folder, f"{self.profile_name}.png")
             plt.savefig(path, dpi=150)
-            rank_print(f"Memory graph saved to {path}")
+            self._log(f"Memory graph saved to {path}")
         else:
             plt.show()
 
         plt.close()
+
+
+class FlamegraphMemoryProfiler(ZeroProfiler):
+    """Memory profiler that outputs flamegraphs.
+
+    CPU mode: Uses memray to generate interactive HTML flamegraphs.
+    CUDA mode: Uses PyTorch memory snapshots (.pickle) viewable at pytorch.org/memory_viz.
+
+    Generates per-process output files for distributed training.
+    Each rank gets its own output file with the rank number in the filename.
+    """
+
+    def __init__(
+        self,
+        output_folder: str = "./profiles",
+        profile_name: str = "memory_flamegraph",
+        device: str = "cpu",
+        interactive: bool = True,
+        track_leaks: bool = False,
+        generate_temporal: bool = False,
+        log_ranks: Optional[list[int]] = None,
+    ):
+        super().__init__(output_folder, profile_name, log_ranks)
+        self.output_folder = output_folder
+        self.profile_name = profile_name
+        self.device = device
+        self.interactive = interactive
+        self.track_leaks = track_leaks
+        self.generate_temporal = generate_temporal
+        self.use_cuda = device != "cpu" and torch.cuda.is_available()
+
+        if not self.use_cuda and not MEMRAY_AVAILABLE:
+            raise ImportError(
+                "memray is required for CPU FlamegraphMemoryProfiler. "
+                "Install with: pip install memray"
+            )
+
+        self.tracker = None
+        self.bin_path = None
+        self.pickle_path = None
+
+    def __enter__(self):
+        self._register_instance()
+        os.makedirs(self.output_folder, exist_ok=True)
+
+        if self.use_cuda:
+            self.pickle_path = os.path.join(
+                self.output_folder,
+                f"{self.profile_name}_rank{self._rank}.pickle"
+            )
+            torch.cuda.memory._record_memory_history(
+                enabled="all",
+                context="all",
+                stacks="all",
+            )
+            self._log(f"[FlamegraphMemoryProfiler] Started CUDA tracking")
+        else:
+            self.bin_path = os.path.join(
+                self.output_folder,
+                f"{self.profile_name}_rank{self._rank}.bin"
+            )
+            destination = memray.FileDestination(self.bin_path, overwrite=True)
+            self.tracker = memray.Tracker(destination=destination, native_traces=True)
+            self.tracker.__enter__()
+            self._log(f"[FlamegraphMemoryProfiler] Started CPU tracking")
+
+        return self
+
+    def __exit__(self, *args, **kwargs):
+        if self.use_cuda:
+            torch.cuda.memory._dump_snapshot(self.pickle_path)
+            torch.cuda.memory._record_memory_history(enabled=None)
+            self._log(f"[FlamegraphMemoryProfiler] CUDA snapshot saved to {self.pickle_path}")
+            self._log("[FlamegraphMemoryProfiler] View at https://pytorch.org/memory_viz")
+        else:
+            self.tracker.__exit__(*args, **kwargs)
+            self._log(f"[FlamegraphMemoryProfiler] Stopped CPU tracking")
+            if self.interactive:
+                self._generate_flamegraph()
+        self._unregister_instance()
+
+    def _generate_flamegraph(self):
+        html_path = os.path.join(
+            self.output_folder,
+            f"{self.profile_name}_rank{self._rank}.html"
+        )
+
+        cmd = ["memray", "flamegraph", "-o", html_path, "-f", "--inverted"]
+
+        if self.track_leaks:
+            cmd.append("--leaks")
+        if self.generate_temporal:
+            cmd.append("--temporal")
+
+        cmd.append(self.bin_path)
+
+        try:
+            subprocess.run(cmd, check=True, capture_output=True)
+            self._log(f"[FlamegraphMemoryProfiler] Flamegraph saved to {html_path}")
+        except subprocess.CalledProcessError as e:
+            self._log(f"[FlamegraphMemoryProfiler] Failed to generate flamegraph: {e.stderr.decode()}")

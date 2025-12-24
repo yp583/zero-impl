@@ -1,0 +1,19 @@
+Attaching to comms-test-single-1
+comms-test-single-1  | Single process training started!
+comms-test-single-1  | -----------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+comms-test-single-1  |                    Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls  
+comms-test-single-1  | -----------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+comms-test-single-1  |             aten::empty         0.78%      18.627us         0.78%      18.627us       2.328us       4.76 KB       4.76 KB             8  
+comms-test-single-1  |            aten::linear         0.61%      14.543us        92.90%       2.230ms     371.618us         528 B           0 B             6  
+comms-test-single-1  |             aten::addmm        90.17%       2.164ms        90.97%       2.183ms     363.882us         528 B         528 B             6  
+comms-test-single-1  |              aten::relu         0.70%      16.832us         1.38%      33.124us       8.281us         512 B           0 B             4  
+comms-test-single-1  |         aten::clamp_min         0.68%      16.292us         0.68%      16.292us       4.073us         512 B         512 B             4  
+comms-test-single-1  |            aten::arange         1.14%      27.458us         2.37%      56.792us      14.198us          64 B          16 B             4  
+comms-test-single-1  |           aten::resize_         0.22%       5.249us         0.22%       5.249us       2.624us          16 B          16 B             2  
+comms-test-single-1  |                aten::to         0.22%       5.332us         1.10%      26.291us      13.145us          16 B           0 B             2  
+comms-test-single-1  |          aten::_to_copy         0.34%       8.084us         0.87%      20.959us      10.480us          16 B           0 B             2  
+comms-test-single-1  |     aten::empty_strided         0.16%       3.833us         0.16%       3.833us       1.917us          16 B          16 B             2  
+comms-test-single-1  | -----------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+comms-test-single-1  | Self CPU time total: 2.400ms
+comms-test-single-1  | 
+[Kcomms-test-single-1 exited with code 0

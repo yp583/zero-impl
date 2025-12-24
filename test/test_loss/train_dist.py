@@ -1,0 +1,126 @@
+from engine.utils.distributed import rank_print
+import torch
+import torch.distributed as dist
+from contextlib import ExitStack
+
+from transformers.modeling_outputs import SequenceClassifierOutput
+from data_sources.bert.bert_dataclient import BertDatasetClient
+from test.test_loss.model import create_bert_model
+from engine.zero_init import ZeroEngine, ZeroEngineConfig
+from engine.profilers import TensorLifecycleProfiler
+from engine.utils import rank0_print
+from dotenv import load_dotenv
+import os
+import logging
+
+load_dotenv()
+
+
+def finalize_dist():
+    dist.barrier()
+    dist.destroy_process_group()
+
+
+def dist_train():
+    dist.init_process_group(backend=os.getenv("TORCH_BACKEND"))
+    rank = dist.get_rank()
+    world_size = dist.get_world_size()
+
+    rank_print(f"LOSS process initialized successfully!")
+
+    ds_client = BertDatasetClient(rank=rank, world_size=world_size)
+    data = ds_client.get_shard()
+
+    device = "cpu"
+    generator = torch.Generator(device=device).manual_seed(42 + rank)
+    torch.manual_seed(42)
+
+    zero_config = ZeroEngineConfig(
+        generator=generator,
+        device=device,
+        debug=True,
+    )
+
+    with ExitStack() as stack:
+        ze = stack.enter_context(ZeroEngine(config=zero_config))
+        
+
+        model = create_bert_model()
+        ze.register_model(model)
+        norm = 0
+        for name, param in model.named_parameters():
+            norm += torch.norm(param._shard_state.materialized)
+        print("[NORM OF INITED PARAMS]: ", norm)
+
+
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+
+        input_ids = torch.tensor([dp[0] for dp in data], dtype=torch.long, device=device)
+        attention_mask = torch.tensor([dp[1] for dp in data], dtype=torch.long, device=device)
+        labels = torch.tensor([dp[2] for dp in data], dtype=torch.long, device=device)
+        
+        # for portable code
+        i = 0
+        batch_size = int(os.getenv("BATCH_SIZE", 32))
+
+        batch_input_ids = input_ids[i:i + batch_size]
+        batch_attention_mask = attention_mask[i:i + batch_size]
+        batch_labels = labels[i:i + batch_size]
+
+        outputs = model.forward(
+            input_ids=batch_input_ids,
+            attention_mask=batch_attention_mask,
+            labels=batch_labels,
+        )
+        assert(isinstance(outputs, SequenceClassifierOutput))
+        assert(isinstance(outputs.loss, torch.Tensor))
+        loss = outputs.loss
+        rank0_print("[LOSS]: ", loss)
+
+        loss.backward()
+
+        optimizer.step()
+        optimizer.zero_grad()
+
+ 
+        # num_epochs = int(os.getenv("NUM_EPOCHS", 10))
+        # batch_size = int(os.getenv("BATCH_SIZE", 32))
+
+        # for epoch in range(num_epochs):
+        #     epoch_loss = 0.0
+        #     num_batches = 0
+        #
+        #     for i in range(0, len(input_ids), batch_size):
+        #
+        #         batch_input_ids = input_ids[i:i + batch_size]
+        #         batch_attention_mask = attention_mask[i:i + batch_size]
+        #         batch_labels = labels[i:i + batch_size]
+        #
+        #         outputs = model.forward(
+        #             input_ids=batch_input_ids,
+        #             attention_mask=batch_attention_mask,
+        #             labels=batch_labels,
+        #         )
+        #         assert(isinstance(outputs, SequenceClassifierOutput))
+        #         assert(isinstance(outputs.loss, torch.Tensor))
+        #         loss = outputs.loss
+        #
+        #         loss.backward()
+        #
+        #         optimizer.step()
+        #         optimizer.zero_grad()
+        #
+        #         epoch_loss += loss.item()
+        #         num_batches += 1
+        #
+        #         loss_profiler.record(loss)
+        #         peak_mem_profiler.step()
+        #         iter_profiler.step()
+        #
+        #     avg_loss = epoch_loss / num_batches
+        #     rank0_print(f"Epoch [{epoch + 1}/{num_epochs}], Average Loss: {avg_loss:.4f}")
+        #
+    finalize_dist()
+
+if __name__ == "__main__":
+    dist_train()

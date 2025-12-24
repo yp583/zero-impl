@@ -1,3 +1,4 @@
+from datetime import timedelta
 from sympy.core.function import BadArgumentsError
 import torch
 import torch.distributed as dist
@@ -11,12 +12,13 @@ class _UnpadWorkGather:
         self._original_sizes = original_sizes
         self._completed = False
 
-    def wait(self):
+    def wait(self, timeout: timedelta | None = None) -> bool:
         if not self._completed:
             self._work.wait()
             for i, (t, size) in enumerate(zip(self._padded_tensors, self._original_sizes)):
                 self._tensor_list[i] = t[:size]
             self._completed = True
+        return self._completed
 
     def is_completed(self):
         if self._completed:
@@ -25,6 +27,7 @@ class _UnpadWorkGather:
             self.wait()
             return True
         return False
+
 class _UnpadWorkScatter:
     def __init__(self, work, output_tensor, padded_output, original_size):
         self._work = work
@@ -33,11 +36,12 @@ class _UnpadWorkScatter:
         self._original_size = original_size
         self._completed = False
 
-    def wait(self):
+    def wait(self, timeout: timedelta | None = None) -> bool:
         if not self._completed:
             self._work.wait()
             self._output_tensor.copy_(self._padded_output[:self._original_size])
             self._completed = True
+        return self._completed
 
     def is_completed(self):
         if self._completed:
@@ -50,7 +54,7 @@ class _UnpadWorkScatter:
     def __getattr__(self, name):
         return getattr(self._work, name)
 
-def all_gather_uneven(tensor_list, tensor, group=None, async_op=False):
+def all_gather_uneven(tensor_list, tensor, group=None, async_op=False) -> dist.Work:
     rank = dist.get_rank(group)
     backend = dist.get_backend(group)
     supports_uneven = UNEVEN_COMMS.get(backend, False)
@@ -78,7 +82,7 @@ def all_gather_uneven(tensor_list, tensor, group=None, async_op=False):
     else:
         return dist.all_gather(tensor_list, tensor, group=group, async_op=async_op)
 
-def reduce_scatter_uneven(output_tensor: torch.Tensor, input_tensors: list[torch.Tensor], op: dist.ReduceOp = dist.ReduceOp.SUM, group=None, async_op=False):
+def reduce_scatter_uneven(output_tensor: torch.Tensor, input_tensors: list[torch.Tensor], op = dist.ReduceOp.SUM, group=None, async_op=False) -> dist.Work:
     rank = dist.get_rank(group)
     world_size = dist.get_world_size(group)
     backend = dist.get_backend(group)
@@ -124,3 +128,4 @@ def rank_print(*args, rank_filter=None, **kwargs):
     else:
         rank = 0
     print(f"[Rank {rank}]", *args, **kwargs)
+

@@ -1,5 +1,10 @@
 services:
-  datahost:
+  
+# ------------------------
+#     SIMPLE TEST
+# ------------------------
+
+  simple-datahost:
     build:
       context: .
       dockerfile: data_sources/dev/Dockerfile
@@ -10,16 +15,21 @@ services:
       - ./engine:/app/engine
       - ./data_sources:/app/data_sources
     profiles: [simple]
-
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:7777/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
   simple-trainer:
     build:
       context: .
       dockerfile: test/test_simple_model/Dockerfile
     depends_on:
-      - datahost
+      - simple-datahost
     env_file: .env
     environment:
-      - NUM_EPOCHS=100
+      - NUM_EPOCHS=10
       - BATCH_SIZE=32
       - MASTER_ADDR=simple-trainer
     shm_size: 2gb
@@ -34,10 +44,11 @@ services:
       context: .
       dockerfile: test/test_simple_model/Dockerfile
     depends_on:
-      - datahost
+      simple-datahost:
+        condition: service_healthy
     env_file: .env
     environment:
-      - NUM_EPOCHS=100
+      - NUM_EPOCHS=10
       - BATCH_SIZE=32
     command: uv run python test/test_simple_model/train_single.py
     volumes:
@@ -55,19 +66,30 @@ services:
     env_file: .env
     volumes:
       - ./data_sources:/app/data_sources
-    profiles: [bert]
+    profiles: [bert, loss]
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:7778/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+      
+# ------------------------
+#     BERT TEST
+# ------------------------
 
   bert-trainer:
     build:
       context: .
       dockerfile: test/test_bert/Dockerfile
     depends_on:
-      - bert-datahost
+      bert-datahost:
+        condition: service_healthy
     env_file: .env
     environment:
       - BERT_DATASET_HOST_URL=http://bert-datahost:7778
-      - NUM_EPOCHS=100
-      - BATCH_SIZE=32
+      - NUM_EPOCHS=10 
+      - BATCH_SIZE=8
       - MASTER_ADDR=bert-trainer
     shm_size: 4gb
     deploy:
@@ -85,7 +107,8 @@ services:
       context: .
       dockerfile: test/test_bert/Dockerfile
     depends_on:
-      - bert-datahost
+      bert-datahost:
+        condition: service_healthy
     env_file: .env
     environment:
       - BERT_DATASET_HOST_URL=http://bert-datahost:7778
@@ -101,3 +124,55 @@ services:
       - ./data_sources:/app/data_sources
       - ./test:/app/test
     profiles: [bert]
+
+# ------------------------
+#     LOSS TEST
+# ------------------------
+
+
+  loss-trainer:
+    build:
+      context: .
+      dockerfile: test/test_loss/Dockerfile
+    depends_on:
+      bert-datahost:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      - BERT_DATASET_HOST_URL=http://bert-datahost:7778
+      - NUM_EPOCHS=10
+      - BATCH_SIZE=8
+      - MASTER_ADDR=loss-trainer
+    shm_size: 4gb
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+    volumes:
+      - ./engine:/app/engine
+      - ./data_sources:/app/data_sources
+      - ./test:/app/test
+    profiles: [loss]
+
+  loss-trainer-single:
+    build:
+      context: .
+      dockerfile: test/test_loss/Dockerfile
+    depends_on:
+      bert-datahost:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      - BERT_DATASET_HOST_URL=http://bert-datahost:7778
+      - NUM_EPOCHS=10
+      - BATCH_SIZE=8
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+    command: uv run python test/test_loss/train_single.py
+    volumes:
+      - ./engine:/app/engine
+      - ./data_sources:/app/data_sources
+      - ./test:/app/test
+    profiles: [loss]
