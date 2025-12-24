@@ -1,17 +1,5 @@
 
-
-if __name__ == "__main__":
-    world_size = int(os.environ.get("WORLD_SIZE", 4))
-    port = int(os.environ.get("BERT_DATASET_HOST_PORT", 7778))
-    max_samples = int(os.environ.get("BERT_MAX_SAMPLES", 1000))
-
-    dataset = BertSentimentDataset(split="train", max_samples=max_samples)
-    ds_host = BertDatasetHost(dataset, world_size)
-
-    print(f"Starting BERT dataset host on 0.0.0.0:{port} for world_size={world_size}")
-    print(f"Dataset size: {len(dataset)}")
-    ds_host.run(host="0.0.0.0", port=port)
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 import uvicorn
 import os
@@ -61,3 +49,14 @@ class BertDatasetHost:
 
     def run(self, host: str = "0.0.0.0", port: int = 7778):
         uvicorn.run(self.app, host=host, port=port)
+if __name__ == "__main__":
+    world_size = int(os.environ.get("WORLD_SIZE", 4))
+    port = int(os.environ.get("BERT_DATASET_HOST_PORT", 7778))
+    max_samples = int(os.environ.get("BERT_MAX_SAMPLES", 1000))
+
+    dataset = BertSentimentDataset(split="train", max_samples=max_samples)
+    ds_host = BertDatasetHost(dataset, world_size)
+
+    print(f"Starting BERT dataset host on 0.0.0.0:{port} for world_size={world_size}")
+    print(f"Dataset size: {len(dataset)}")
+    ds_host.run(host="0.0.0.0", port=port)

@@ -1,17 +1,26 @@
 import torch
 import matplotlib.pyplot as plt
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from typing import Optional
 
-from engine.utils.distributed import rank_print
+from engine.profilers.base import ZeroProfiler
+
 
 @dataclass
 class LossSnapshot:
     step: int
     loss: float
 
-class LossProfiler:
-    def __init__(self, graph_path: str = None):
+
+class LossProfiler(ZeroProfiler):
+    def __init__(
+        self,
+        graph_path: Optional[str] = None,
+        log_ranks: Optional[list[int]] = None,
+    ):
+        log_folder = os.path.dirname(graph_path) if graph_path else None
+        super().__init__(log_folder, "loss", log_ranks)
         self.graph_path = graph_path
         self.snapshots: list[LossSnapshot] = []
         self.step = 0
@@ -22,8 +31,10 @@ class LossProfiler:
         self.step += 1
 
     def graph(self):
+        if not self._should_log():
+            return
         if not self.snapshots:
-            rank_print("No loss snapshots recorded")
+            self._log("No loss snapshots recorded")
             return
 
         steps = [s.step for s in self.snapshots]
@@ -40,14 +51,16 @@ class LossProfiler:
         if self.graph_path:
             os.makedirs(os.path.dirname(self.graph_path), exist_ok=True)
             plt.savefig(self.graph_path)
-            rank_print(f"Loss graph saved to {self.graph_path}")
+            self._log(f"Loss graph saved to {self.graph_path}")
         else:
             plt.show()
 
         plt.close()
 
     def __enter__(self):
+        self._register_instance()
         return self
 
     def __exit__(self, *args, **kwargs):
         self.graph()
+        self._unregister_instance()
