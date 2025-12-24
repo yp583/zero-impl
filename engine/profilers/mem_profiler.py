@@ -243,7 +243,7 @@ class MemoryProfiler(ZeroProfiler):
         return f"{bytes_val} b"
 
     def _print_table(self):
-        rank_print(
+        self._log(
             self.profiler.key_averages().table(
                 sort_by="self_cpu_memory_usage",
                 row_limit=self.row_limit
