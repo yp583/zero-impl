@@ -11,10 +11,10 @@ class ShardedParameterState:
     param_meta: nn.Parameter
     rank_intervals: list[slice | None]
 
-    materialized: Optional[nn.Parameter]
+    materialized: Optional[torch.Tensor]
     full_grad: Optional[torch.Tensor]
 
-    def __init__(self, param_meta: nn.Parameter, rank_intervals: list[slice | None], materialized: torch.Tensor = None, full_grad: torch.Tensor = None):
+    def __init__(self, param_meta: nn.Parameter, rank_intervals: list[slice | None], materialized: Optional[torch.Tensor] = None, full_grad: Optional[torch.Tensor] = None):
         self.param_meta = param_meta
         self.rank_intervals = rank_intervals
 
@@ -117,9 +117,11 @@ def _set_module_param(module: nn.Module, name: str, new_param: nn.Parameter):
     for part in parts[:-1]:
         target = getattr(target, part)
     old_param = target._parameters[parts[-1]]
-    target._parameters[parts[-1]] = new_param
     del old_param
+    target._parameters[parts[-1]] = new_param
 
+def discard_param_grad(param: nn.Parameter):
+    param.grad.set_(torch.empty(0))
 
 def set_param_meta(module: nn.Module, name: str, param: nn.Parameter):
     shard_state = getattr(param, "_shard_state", None)
@@ -129,6 +131,7 @@ def set_param_meta(module: nn.Module, name: str, param: nn.Parameter):
     )
     if shard_state is not None:
         new_param._shard_state = shard_state
+    param.data.set_(torch.empty(0, device=param.device, dtype=param.dtype))
     _set_module_param(module, name, new_param)
 
 
