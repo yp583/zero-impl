@@ -12,12 +12,13 @@ class _UnpadWorkGather:
         self._original_sizes = original_sizes
         self._completed = False
 
-    def wait(self):
+    def wait(self, timeout: timedelta | None = None) -> bool:
         if not self._completed:
             self._work.wait()
             for i, (t, size) in enumerate(zip(self._padded_tensors, self._original_sizes)):
                 self._tensor_list[i] = t[:size]
             self._completed = True
+        return self._completed
 
     def is_completed(self):
         if self._completed:
@@ -26,6 +27,7 @@ class _UnpadWorkGather:
             self.wait()
             return True
         return False
+
 class _UnpadWorkScatter:
     def __init__(self, work, output_tensor, padded_output, original_size):
         self._work = work
@@ -34,11 +36,12 @@ class _UnpadWorkScatter:
         self._original_size = original_size
         self._completed = False
 
-    def wait(self):
+    def wait(self, timeout: timedelta | None = None) -> bool:
         if not self._completed:
             self._work.wait()
             self._output_tensor.copy_(self._padded_output[:self._original_size])
             self._completed = True
+        return self._completed
 
     def is_completed(self):
         if self._completed:
