@@ -15,6 +15,10 @@ class DevDatasetHost:
         self.world_size = world_size
         self.app = FastAPI()
 
+        @self.app.get("/health", status_code=status.HTTP_200_OK, tags=["healthcheck"])
+        async def health_check():
+            return {"status": "healthy"}
+
         @self.app.post("/get_shard")
         async def get_shard(request: ShardRequest):
             try:
