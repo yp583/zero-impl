@@ -1,4 +1,5 @@
 from collections import deque
+from curses import initscr
 from dataclasses import dataclass
 from functools import partial
 from typing import Iterator
