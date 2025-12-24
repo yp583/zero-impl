@@ -54,7 +54,7 @@ def dist_train():
         attention_mask = torch.tensor([dp[1] for dp in data], dtype=torch.long, device=device)
         labels = torch.tensor([dp[2] for dp in data], dtype=torch.long, device=device)
 
-        num_epochs = int(os.getenv("NUM_EPOCHS", 100))
+        num_epochs = int(os.getenv("NUM_EPOCHS", 10))
         batch_size = int(os.getenv("BATCH_SIZE", 32))
 
 
