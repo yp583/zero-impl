@@ -17,3 +17,4 @@ graphs
 FINDINGS.md
 *.test
 *.DS_Store
+uv.lock
