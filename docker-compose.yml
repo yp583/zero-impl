@@ -26,7 +26,8 @@ services:
       context: .
       dockerfile: test/test_simple_model/Dockerfile
     depends_on:
-      - simple-datahost
+      simple-datahost:
+        condition: service_healthy
     env_file: .env
     environment:
       - NUM_EPOCHS=10
