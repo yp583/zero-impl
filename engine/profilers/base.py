@@ -38,6 +38,12 @@ class ZeroProfiler(ABC):
             return dist.get_rank()
         return int(os.environ.get("RANK", os.environ.get("LOCAL_RANK", 0)))
 
+    def _is_distributed(self) -> bool:
+        return dist.is_initialized()
+
+    def _rank_suffix(self) -> str:
+        return f"_rank{self._rank}" if self._is_distributed() else ""
+
     def _should_log(self) -> bool:
         if self.log_ranks is None:
             return True
@@ -46,7 +52,7 @@ class ZeroProfiler(ABC):
     def _get_log_path(self) -> Optional[str]:
         if not self.log_folder:
             return None
-        return os.path.join(self.log_folder, f"{self.log_name}_rank{self._rank}.log")
+        return os.path.join(self.log_folder, f"{self.log_name}{self._rank_suffix()}.log")
 
     def _log(self, message: str):
         if not self._should_log():
