@@ -2,7 +2,7 @@ import torch
 from contextlib import ExitStack
 from data_sources.bert.bert_dataclient import BertDatasetClient
 from test.test_loss.model import create_bert_model
-from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
+from engine.profilers import PeakMemoryProfiler
 from dotenv import load_dotenv
 import os
 
@@ -17,7 +17,10 @@ def single_train():
     torch.manual_seed(42)
     device = "cpu"
 
+    graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
+
     with ExitStack() as stack:
+        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(output_folder=graph_dir, profile_name="peak_memory_single", device=device))
         model = create_bert_model()
         print("[NORM OF INITED PARAMS]: ", sum([torch.norm(param, p=2) for param in model.parameters()]))
         model.to(device)
@@ -42,12 +45,14 @@ def single_train():
             labels=batch_labels,
         )
         loss = outputs.loss
-        print("[LOSS]: ", loss)
+        print("[LOSS]: ", loss) # 300
 
         loss.backward()
 
         optimizer.step()
         optimizer.zero_grad()
+
+        peak_mem_profiler.step()
 
         # num_epochs = int(os.getenv("NUM_EPOCHS", 100))
         # batch_size = int(os.getenv("BATCH_SIZE", 32))

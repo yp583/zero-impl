@@ -116,7 +116,7 @@ class TensorLifecycleProfiler(ZeroProfiler):
         plt.tight_layout()
 
         if self.graph_folder:
-            path = os.path.join(self.graph_folder, f"{self.profile_name}_rank{self._rank}.png")
+            path = os.path.join(self.graph_folder, f"{self.profile_name}{self._rank_suffix()}.png")
             plt.savefig(path, dpi=150)
             self._log(f"Tensor lifecycle graph saved to {path}")
         else:

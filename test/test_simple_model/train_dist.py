@@ -38,11 +38,10 @@ def dist_train():
     loss_graph_path = os.path.join(graph_dir, f"loss_dist_rank_{rank}.png")
 
     with ExitStack() as stack:
-        tensor_profiler = stack.enter_context(TensorLifecycleProfiler(log_folder=graph_dir, log_ranks=[0]))
-        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(graph_folder=graph_dir, profile_name=f"peak_memory_dist_rank_{rank}", device=device, log_ranks=[0]))
+        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(output_folder=graph_dir, profile_name="peak_memory_dist", device=device, log_ranks=[0]))
         ze = stack.enter_context(ZeroEngine(config=zero_config))
         loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path, log_ranks=[0]))
-        iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name=f"iteration_time_rank_{rank}", log_ranks=[0]))
+        iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name="iteration_time", log_ranks=[0]))
 
         model = TestModel(input_dim=128, hidden_dim=64, output_dim=128)
         ze.register_model(model)

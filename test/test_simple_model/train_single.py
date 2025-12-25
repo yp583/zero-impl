@@ -22,7 +22,7 @@ def single_train():
     loss_graph_path = os.path.join(graph_dir, "loss_single.png")
 
     with ExitStack() as stack:
-        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(graph_folder=graph_dir, profile_name="peak_memory_single", device=device))
+        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(output_folder=graph_dir, profile_name="peak_memory_single", device=device))
         loss_profiler = stack.enter_context(LossProfiler(graph_path=loss_graph_path))
         iter_profiler = stack.enter_context(IterationProfiler(graph_folder=graph_dir, profile_name="iteration_time_single"))
 

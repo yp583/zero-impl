@@ -7,7 +7,7 @@ from transformers.modeling_outputs import SequenceClassifierOutput
 from data_sources.bert.bert_dataclient import BertDatasetClient
 from test.test_loss.model import create_bert_model
 from engine.zero_init import ZeroEngine, ZeroEngineConfig
-from engine.profilers import TensorLifecycleProfiler
+from engine.profilers import TensorLifecycleProfiler, PeakMemoryProfiler
 from engine.utils import rank0_print
 from dotenv import load_dotenv
 import os
@@ -41,7 +41,10 @@ def dist_train():
         debug=True,
     )
 
+    graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
+
     with ExitStack() as stack:
+        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(output_folder=graph_dir, profile_name="peak_memory_dist", device=device, log_ranks=[0]))
         ze = stack.enter_context(ZeroEngine(config=zero_config))
         
 
@@ -75,14 +78,15 @@ def dist_train():
         assert(isinstance(outputs, SequenceClassifierOutput))
         assert(isinstance(outputs.loss, torch.Tensor))
         loss = outputs.loss
-        rank0_print("[LOSS]: ", loss)
+        rank0_print("[LOSS]: ", loss) # 40000
 
         loss.backward()
 
         optimizer.step()
         optimizer.zero_grad()
 
- 
+        peak_mem_profiler.step()
+
         # num_epochs = int(os.getenv("NUM_EPOCHS", 10))
         # batch_size = int(os.getenv("BATCH_SIZE", 32))
 

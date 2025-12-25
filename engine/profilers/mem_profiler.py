@@ -29,131 +29,56 @@ class MemoryProfilerResult:
     total_cpu_time: str = ""
 
 
-@dataclass
-class PeakMemorySnapshot:
-    step: int
-    current_mb: float
-    peak_mb: float
-    label: Optional[str] = None
-
-
 class PeakMemoryProfiler(ZeroProfiler):
-    """Tracks peak memory usage over training iterations.
+    """Thin wrapper around PyTorch profiler for memory tracking.
 
-    Uses torch.cuda memory tracking for GPU, falls back to tracemalloc for CPU.
+    Uses torch.profiler with profile_memory=True to track tensor allocations.
+    Exports an interactive HTML memory timeline via export_memory_timeline().
     """
 
     def __init__(
         self,
-        graph_folder: Optional[str] = None,
+        output_folder: Optional[str] = None,
         profile_name: str = "peak_memory",
         device: str = "cpu",
-        hook_modules: bool = False,
         log_ranks: Optional[list[int]] = None,
     ):
-        super().__init__(graph_folder, profile_name, log_ranks)
-        self.graph_folder = graph_folder
+        super().__init__(output_folder, profile_name, log_ranks)
+        self.output_folder = output_folder
         self.profile_name = profile_name
-        self.snapshots: list[PeakMemorySnapshot] = []
-        self.step_count = 0
         self.device = device
         self.use_cuda = device != "cpu" and torch.cuda.is_available()
-        self.hook_modules = hook_modules
-        self._hook_handles: list = []
+        self.profiler = None
 
     def __enter__(self):
         self._register_instance()
-        if self.use_cuda:
-            torch.cuda.reset_peak_memory_stats()
-            torch.cuda.empty_cache()
-        else:
-            tracemalloc.start()
+        activities = [ProfilerActivity.CUDA] if self.use_cuda else [ProfilerActivity.CPU]
 
-        if self.hook_modules:
-            self._hook_handles.append(
-                register_module_forward_pre_hook(lambda m, i: self.step())
-            )
-            self._hook_handles.append(
-                register_module_forward_hook(lambda m, i, o: self.step())
-            )
-
+        self.profiler = profile(
+            activities=activities,
+            profile_memory=True,
+            record_shapes=True,
+            with_stack=True,
+        )
+        self.profiler.__enter__()
         return self
 
-    def step(self, label: Optional[str] = None):
-        if self.use_cuda:
-            current = torch.cuda.memory_allocated() / (1024 * 1024)
-            peak = torch.cuda.max_memory_allocated() / (1024 * 1024)
-        else:
-            current, peak = tracemalloc.get_traced_memory()
-            current = current / (1024 * 1024)
-            peak = peak / (1024 * 1024)
-
-        self.snapshots.append(PeakMemorySnapshot(
-            step=self.step_count,
-            current_mb=current,
-            peak_mb=peak,
-            label=label,
-        ))
-        self.step_count += 1
+    def step(self, _label: Optional[str] = None):
+        if self.profiler:
+            self.profiler.step()
 
     def __exit__(self, *args, **kwargs):
-        for handle in self._hook_handles:
-            handle.remove()
-        self._hook_handles.clear()
-
-        if not self.use_cuda:
-            tracemalloc.stop()
-        self._print_summary()
-        self._graph()
+        self.profiler.__exit__(*args, **kwargs)
+        self._export_timeline()
         self._unregister_instance()
 
-    def _print_summary(self):
-        if not self.snapshots:
+    def _export_timeline(self):
+        if not self._should_log() or not self.output_folder:
             return
-        max_peak = max(s.peak_mb for s in self.snapshots)
-        avg_current = sum(s.current_mb for s in self.snapshots) / len(self.snapshots)
-        self._log(f"[PeakMemoryProfiler] Peak: {max_peak:.2f} MB, Avg Current: {avg_current:.2f} MB")
-
-    def _graph(self):
-        if not self.snapshots or not self._should_log():
-            return
-
-        if self.graph_folder:
-            os.makedirs(self.graph_folder, exist_ok=True)
-
-        plt.figure(figsize=(12, 5))
-
-        steps = [s.step for s in self.snapshots]
-        current = [s.current_mb for s in self.snapshots]
-        peak = [s.peak_mb for s in self.snapshots]
-
-        plt.plot(steps, current, label='Current Memory (MB)', color='steelblue', linewidth=1.5)
-        plt.plot(steps, peak, label='Peak Memory (MB)', color='darkorange', linewidth=1.5, linestyle='--')
-
-        colors = ['red', 'green', 'purple', 'brown', 'pink', 'gray', 'olive', 'cyan']
-        color_idx = 0
-        for snapshot in self.snapshots:
-            if snapshot.label:
-                plt.axvline(x=snapshot.step, color=colors[color_idx % len(colors)], linestyle=':', linewidth=1.5, alpha=0.8)
-                plt.text(snapshot.step, plt.ylim()[1] * 0.95, snapshot.label, rotation=90,
-                        verticalalignment='top', fontsize=8, color=colors[color_idx % len(colors)])
-                color_idx += 1
-
-        plt.xlabel('Step')
-        plt.ylabel('Memory (MB)')
-        plt.title(f'{self.profile_name}: Memory Over Time')
-        plt.legend()
-        plt.grid(True, alpha=0.3)
-        plt.tight_layout()
-
-        if self.graph_folder:
-            path = os.path.join(self.graph_folder, f"{self.profile_name}.png")
-            plt.savefig(path, dpi=150)
-            self._log(f"Peak memory graph saved to {path}")
-        else:
-            plt.show()
-
-        plt.close()
+        os.makedirs(self.output_folder, exist_ok=True)
+        path = os.path.join(self.output_folder, f"{self.profile_name}{self._rank_suffix()}.html")
+        self.profiler.export_memory_timeline(path)
+        self._log(f"[PeakMemoryProfiler] Memory timeline saved to {path}")
 
 
 class MemoryProfiler(ZeroProfiler):
@@ -379,7 +304,7 @@ class FlamegraphMemoryProfiler(ZeroProfiler):
     def _generate_flamegraph(self):
         html_path = os.path.join(
             self.output_folder,
-            f"{self.profile_name}_rank{self._rank}.html"
+            f"{self.profile_name}{self._rank_suffix()}.html"
         )
 
         cmd = ["memray", "flamegraph", "-o", html_path, "-f", "--inverted"]
