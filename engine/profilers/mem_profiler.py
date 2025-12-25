@@ -3,13 +3,8 @@ from torch.profiler import profile, schedule, ProfilerActivity
 from typing import Optional
 from dataclasses import dataclass, field
 import matplotlib.pyplot as plt
-import tracemalloc
 import subprocess
 import os
-from torch.nn.modules.module import (
-    register_module_forward_pre_hook,
-    register_module_forward_hook,
-)
 
 from engine.profilers.base import ZeroProfiler
 
