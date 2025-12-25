@@ -348,7 +348,7 @@ class FlamegraphMemoryProfiler(ZeroProfiler):
         if self.use_cuda:
             self.pickle_path = os.path.join(
                 self.output_folder,
-                f"{self.profile_name}_rank{self._rank}.pickle"
+                f"{self.profile_name}{self._rank_suffix()}.pickle"
             )
             torch.cuda.memory._record_memory_history(
                 enabled="all",
@@ -359,7 +359,7 @@ class FlamegraphMemoryProfiler(ZeroProfiler):
         else:
             self.bin_path = os.path.join(
                 self.output_folder,
-                f"{self.profile_name}_rank{self._rank}.bin"
+                f"{self.profile_name}{self._rank_suffix()}.bin"
             )
             destination = memray.FileDestination(self.bin_path, overwrite=True)
             self.tracker = memray.Tracker(destination=destination, native_traces=True)
