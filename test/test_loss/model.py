@@ -4,10 +4,10 @@ from transformers import BertForSequenceClassification, BertConfig
 
 def create_bert_model(
     vocab_size=30522,
-    hidden_size=256,
-    num_hidden_layers=4,
-    num_attention_heads=4,
-    intermediate_size=1024,
+    hidden_size=1024,
+    num_hidden_layers=24,
+    num_attention_heads=16,
+    intermediate_size=4096,
     max_position_embeddings=512,
     num_labels=2,
 ):
