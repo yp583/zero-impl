@@ -23,33 +23,19 @@ from engine.utils.math import get_slice_numel, shift_slice
 warnings.filterwarnings("ignore", message="Full backward hook")
 
 
-def _calculate_fan_in(shape: tuple[int, int] | tuple[int]) -> int:
-    if len(shape) < 2:
-        return shape[0]
-    receptive_field_size = 1
-    for dim in shape[2:]:
-        receptive_field_size *= dim
-    return shape[1] * receptive_field_size
-
-
 @dataclass
 class ZeroEngineConfig:
-    generator: torch.Generator
     device: str
 
     prefetch_aggressiveness: int = 1
-    
     debug: bool = False
-    profiler: PeakMemoryProfiler | None = None
 
 class ZeroEngine:
     def __init__(self, config: ZeroEngineConfig):
-        self.generator = config.generator
         self.device = config.device
         self.prefetch_aggressiveness = config.prefetch_aggressiveness
 
         self.debug = config.debug
-        self.profiler = config.profiler
 
         self.original_register = None
         self.original_optimizer_subclass_init = None
