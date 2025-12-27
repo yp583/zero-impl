@@ -144,7 +144,7 @@ services:
       - NUM_EPOCHS=10
       - BATCH_SIZE=8
       - MASTER_ADDR=loss-trainer
-    shm_size: 4gb
+    shm_size: 8gb
     deploy:
       resources:
         limits:
@@ -167,6 +167,7 @@ services:
       - BERT_DATASET_HOST_URL=http://bert-datahost:7778
       - NUM_EPOCHS=10
       - BATCH_SIZE=8
+    shm_size: 8gb
     deploy:
       resources:
         limits:

@@ -5,7 +5,7 @@ from data_sources.dev.dev_dataclient import DevDatasetClient
 from engine.utils.distributed import rank_print
 from test.test_simple_model.model import TestModel
 from engine.zero_init import ZeroEngine, ZeroEngineConfig
-from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler, TensorLifecycleProfiler
+from engine.profilers import PeakMemoryProfiler, LossProfiler, IterationProfiler
 from engine.utils import rank0_print
 from dotenv import load_dotenv
 import os

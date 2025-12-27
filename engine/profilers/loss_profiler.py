@@ -58,9 +58,7 @@ class LossProfiler(ZeroProfiler):
         plt.close()
 
     def __enter__(self):
-        self._register_instance()
         return self
 
     def __exit__(self, *args, **kwargs):
         self.graph()
-        self._unregister_instance()

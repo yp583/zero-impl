@@ -120,9 +120,6 @@ def _set_module_param(module: nn.Module, name: str, new_param: nn.Parameter):
     del old_param
     target._parameters[parts[-1]] = new_param
 
-def discard_param_grad(param: nn.Parameter):
-    param.grad.set_(torch.empty(0))
-
 def set_param_meta(module: nn.Module, name: str, param: nn.Parameter):
     shard_state = getattr(param, "_shard_state", None)
     new_param = nn.Parameter(

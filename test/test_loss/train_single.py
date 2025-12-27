@@ -20,7 +20,14 @@ def single_train():
     graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
 
     with ExitStack() as stack:
-        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(output_folder=graph_dir, profile_name="peak_memory_single", device=device))
+        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(
+            output_folder=graph_dir,
+            profile_name="peak_memory_single",
+            device=device,
+            export_chrome_trace=True,
+            export_memory_timeline=True,
+            clear_logs=True,
+        ))
         model = create_bert_model()
         print("[NORM OF INITED PARAMS]: ", sum([torch.norm(param, p=2) for param in model.parameters()]))
         model.to(device)
@@ -39,18 +46,24 @@ def single_train():
         batch_attention_mask = attention_mask[i:i + batch_size]
         batch_labels = labels[i:i + batch_size]
 
+        PeakMemoryProfiler.mark_event("forward_start")
         outputs = model.forward(
             input_ids=batch_input_ids,
             attention_mask=batch_attention_mask,
             labels=batch_labels,
         )
+        PeakMemoryProfiler.mark_event("forward_end")
         loss = outputs.loss
         print("[LOSS]: ", loss) # 300
 
+        PeakMemoryProfiler.mark_event("backward_start")
         loss.backward()
+        PeakMemoryProfiler.mark_event("backward_end")
 
+        PeakMemoryProfiler.mark_event("optimizer_start")
         optimizer.step()
         optimizer.zero_grad()
+        PeakMemoryProfiler.mark_event("optimizer_end")
 
         peak_mem_profiler.step()
 

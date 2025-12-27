@@ -7,7 +7,7 @@ from transformers.modeling_outputs import SequenceClassifierOutput
 from data_sources.bert.bert_dataclient import BertDatasetClient
 from test.test_loss.model import create_bert_model
 from engine.zero_init import ZeroEngine, ZeroEngineConfig
-from engine.profilers import TensorLifecycleProfiler, PeakMemoryProfiler
+from engine.profilers import PeakMemoryProfiler
 from engine.utils import rank0_print
 from dotenv import load_dotenv
 import os
@@ -32,19 +32,24 @@ def dist_train():
     data = ds_client.get_shard()
 
     device = "cpu"
-    generator = torch.Generator(device=device).manual_seed(42 + rank)
-    torch.manual_seed(42)
+    torch.manual_seed(42 + rank)
 
     zero_config = ZeroEngineConfig(
-        generator=generator,
         device=device,
         debug=True,
     )
 
+    rank_print(torch.accelerator.current_accelerator())
     graph_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
 
     with ExitStack() as stack:
-        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(output_folder=graph_dir, profile_name="peak_memory_dist", device=device, log_ranks=[0]))
+        peak_mem_profiler = stack.enter_context(PeakMemoryProfiler(
+            output_folder=graph_dir,
+            profile_name="peak_memory_dist",
+            device=device,
+            export_memory_timeline=True,
+            clear_logs=True,
+        ))
         ze = stack.enter_context(ZeroEngine(config=zero_config))
         
 
@@ -52,7 +57,8 @@ def dist_train():
         ze.register_model(model)
         norm = 0
         for name, param in model.named_parameters():
-            norm += torch.norm(param._shard_state.materialized)
+            if param._shard_state.materialized is not None:
+                norm += torch.norm(param._shard_state.materialized)
         print("[NORM OF INITED PARAMS]: ", norm)
 
 
@@ -70,20 +76,26 @@ def dist_train():
         batch_attention_mask = attention_mask[i:i + batch_size]
         batch_labels = labels[i:i + batch_size]
 
+        PeakMemoryProfiler.mark_event("forward_start")
         outputs = model.forward(
             input_ids=batch_input_ids,
             attention_mask=batch_attention_mask,
             labels=batch_labels,
         )
+        PeakMemoryProfiler.mark_event("forward_end")
         assert(isinstance(outputs, SequenceClassifierOutput))
         assert(isinstance(outputs.loss, torch.Tensor))
         loss = outputs.loss
         rank0_print("[LOSS]: ", loss) # 40000
 
+        PeakMemoryProfiler.mark_event("backward_start")
         loss.backward()
+        PeakMemoryProfiler.mark_event("backward_end")
 
+        PeakMemoryProfiler.mark_event("optimizer_start")
         optimizer.step()
         optimizer.zero_grad()
+        PeakMemoryProfiler.mark_event("optimizer_end")
 
         peak_mem_profiler.step()
 

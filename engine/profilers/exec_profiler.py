@@ -30,7 +30,6 @@ class IterationProfiler(ZeroProfiler):
         self.last_step_time: Optional[float] = None
 
     def __enter__(self):
-        self._register_instance()
         self.last_step_time = time.perf_counter()
         return self
 
@@ -48,7 +47,6 @@ class IterationProfiler(ZeroProfiler):
     def __exit__(self, *args, **kwargs):
         self._print_summary()
         self._graph()
-        self._unregister_instance()
 
     def _print_summary(self):
         if not self.snapshots:

@@ -61,8 +61,8 @@ class ZeroEngine:
         
     def _assign_hooks(self, model):
         forward_gather = partial(gather_params_for_module, device=self.device)
-        forward_discard = partial(discard_params_for_module)
-        backward_discard = partial(discard_grads_for_module)
+        forward_discard = discard_params_for_module
+        backward_discard = discard_grads_for_module
 
         leaf_modules = deque([model])
         while len(leaf_modules) > 0:
@@ -134,31 +134,6 @@ class ZeroEngine:
             _set_module_param(model, name, param_meta)
             curr_numel += param_meta.numel()
 
-    def _override_param_register(self):
-        original_register = nn.Module.register_parameter
-        self.original_register = original_register
-
-        def meta_register(module_self: nn.Module, name: str, param: nn.Parameter | None) -> None:
-
-            if self.profiler and self.debug:
-                self.profiler.step(f"Pre Param Register {module_self._get_name()}")
-                rank0_print("HERE")
-            
-            if isinstance(param, nn.Parameter) and param.data.device.type != 'meta':
-                meta = nn.Parameter(
-                    torch.empty_like(param, device='meta', dtype=param.dtype),
-                    requires_grad=param.requires_grad,
-                )
-                res = original_register(module_self, name, meta)
-            else:
-                res = original_register(module_self, name, param)
-
-            if self.profiler and self.debug:
-                self.profiler.step(f"Post Param Register {module_self._get_name()}")
-            return res
-
-        nn.Module.register_parameter = meta_register
-    
     # Currently only works for vector based optimizers (ie not Muon)
     def _override_optimizer_init(self):
         self.original_optimizer_subclass_init = torch.optim.Optimizer.__init_subclass__
