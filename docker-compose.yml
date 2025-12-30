@@ -14,7 +14,7 @@ services:
     volumes:
       - ./engine:/app/engine
       - ./data_sources:/app/data_sources
-    profiles: [simple]
+    profiles: [simple, mem]
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:7777/health"]
       interval: 10s
@@ -178,3 +178,61 @@ services:
       - ./data_sources:/app/data_sources
       - ./test:/app/test
     profiles: [loss]
+
+  mem-trainer:
+    build:
+      context: .
+      dockerfile: test/test_mem/Dockerfile
+    depends_on:
+      simple-datahost:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      - NUM_EPOCHS=10
+      - BATCH_SIZE=32
+      - MASTER_ADDR=mem-trainer
+    shm_size: 2gb
+    volumes:
+      - ./engine:/app/engine
+      - ./data_sources:/app/data_sources
+      - ./test:/app/test
+    profiles: [mem]
+
+  mem-trainer-single:
+    build:
+      context: .
+      dockerfile: test/test_mem/Dockerfile
+    depends_on:
+      simple-datahost:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      - NUM_EPOCHS=10
+      - BATCH_SIZE=32
+    command: uv run python test/test_mem/train_single.py
+    volumes:
+      - ./engine:/app/engine
+      - ./data_sources:/app/data_sources
+      - ./test:/app/test
+    profiles: [mem]
+
+  profiler-test:
+    build:
+      context: .
+      dockerfile: test/test_mem/Dockerfile
+    env_file: .env
+    environment:
+      - MASTER_ADDR=profiler-test
+    command: >
+      uv run torchrun
+      --master-addr=localhost
+      --master-port=29500
+      --nnodes=1
+      --nproc-per-node=${WORLD_SIZE:-4}
+      test/test_mem/test_profiler.py
+    volumes:
+      - ./engine:/app/engine
+      - ./test:/app/test
+    profiles: [profiler]
+
+   

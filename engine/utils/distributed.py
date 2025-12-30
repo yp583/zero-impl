@@ -1,8 +1,44 @@
+from contextlib import contextmanager
 from datetime import timedelta
+from typing import Callable, Literal, get_args
 from sympy.core.function import BadArgumentsError
 import torch
 import torch.distributed as dist
 from engine.config import UNEVEN_COMMS
+from torch.autograd.profiler import record_function
+
+CATEGORY_COLORS = [
+    "grey",           # Unknown/None (index 0)
+    "darkgreen",      # PARAMETER
+    "goldenrod",      # OPTIMIZER_STATE
+    "black",          # INPUT
+    "mediumpurple",   # TEMPORARY
+    "red",            # ACTIVATION
+    "mediumblue",     # GRADIENT
+    "royalblue",      # AUTOGRAD_DETAIL
+]
+
+
+CATEGORIES = Literal[
+    "Unknown", "Parameter", "Optimizer", "Input",
+    "Temporary", "Activation", "Gradient", "Autograd"
+]
+CATEGORY_NAMES = get_args(CATEGORIES)
+
+# Stacking order configs: category name -> stack position (0 = bottom)
+DEFAULT_STACK_ORDER: dict[str, int] = {name: i for i, name in enumerate(CATEGORY_NAMES)}
+
+DISTRIBUTED_STACK_ORDER: dict[str, int] = {
+    "Input": 0,
+    "Unknown": 1,
+    "Parameter": 2,
+    "Optimizer": 3,
+    "Temporary": 4,
+    "Activation": 5,
+    "Gradient": 6,
+    "Autograd": 7,
+}
+
 
 class _UnpadWorkGather:
     def __init__(self, work, tensor_list, padded_tensors, original_sizes):
@@ -129,3 +165,45 @@ def rank_print(*args, rank_filter=None, **kwargs):
         rank = 0
     print(f"[Rank {rank}]", *args, **kwargs)
 
+def wrap_with_record(name: str):
+    def dec(func: Callable):
+        def wrapper(*args, **kwargs):
+            with record_function(name):
+                val = func(*args, **kwargs)
+            return val
+        return wrapper
+    return dec
+
+@contextmanager
+def record_tensors_as(category: CATEGORIES):
+    """Tag memory allocations with a category for memory timeline visualization.
+
+    Allocations within this context will be tracked under the specified
+    category in the memory profiler graph.
+    """
+    category_idx = CATEGORY_NAMES.index(category)
+    mem_tag_pushed = False
+
+    # Try PyTorch's internal memory category tagging APIs (varies by version)
+    try:
+        if hasattr(torch._C, '_profiler_set_memory_category'):
+            torch._C._profiler_set_memory_category(category_idx)
+            mem_tag_pushed = True
+        elif hasattr(torch._C, '_push_memory_category'):
+            torch._C._push_memory_category(category_idx)
+            mem_tag_pushed = True
+    except Exception:
+        pass
+
+    try:
+        with record_function(f"[memory:{category}]") as rf:
+            yield rf
+    finally:
+        if mem_tag_pushed:
+            try:
+                if hasattr(torch._C, '_profiler_set_memory_category'):
+                    torch._C._profiler_set_memory_category(0)  # Reset to Unknown
+                elif hasattr(torch._C, '_pop_memory_category'):
+                    torch._C._pop_memory_category()
+            except Exception:
+                pass
